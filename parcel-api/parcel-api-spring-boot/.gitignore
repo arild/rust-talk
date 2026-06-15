@@ -1,0 +1,12 @@
+build/
+target/
+out/
+.idea/
+.gradle/
+.claude/
+node_modules/
+test-results.xml
+
+.DS_Store
+*.iml
+*.log*

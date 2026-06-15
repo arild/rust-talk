@@ -1,0 +1,170 @@
+{
+  "parcelNumber": "TESTPARCEL0001000058",
+  "consignmentNumber": "CONS0002000058",
+  "status": "underway",
+  "userChosenName": "My package from Skousen",
+  "direction": "sent",
+  "transport": {
+    "type": "postnord",
+    "electric": false,
+    "fuelType": "hydrogen"
+  },
+  "dimensions": {
+    "lengthInCm": 28,
+    "widthInCm": 23,
+    "heightInCm": 18
+  },
+  "weightInKg": 6.1,
+  "delivery": {
+    "type": "home_delivery",
+    "pickUpPointId": "98765",
+    "deadlineDate": "2026-05-26T10:00:00Z",
+    "extendDeadlineTo": "2026-05-29T10:00:00Z",
+    "pickUpCode": "P100058",
+    "pickUpQrCode": "qr-testparcel0001000058",
+    "shelfNumber": "A8",
+    "gateCode": null,
+    "pinCode": null,
+    "qrCode": null,
+    "permission": "can_collect",
+    "bankidAuthenticated": "not_applicable",
+    "options": [
+      "notify_when_collectable",
+      "early_return",
+      "change_pickup_point",
+      "extend_deadline"
+    ],
+    "progressPercentageBasedOnEvents": 56,
+    "deliveryTime": {
+      "date": "2026-05-17T01:00:00Z",
+      "deliveryWindow": {
+        "start": "2026-05-17T01:00:00Z",
+        "end": "2026-05-17T03:00:00Z"
+      }
+    }
+  },
+  "sender": {
+    "name": "Skousen",
+    "iconUrl": "https://cdn.posten.no/icons/skousen.png",
+    "phoneNumber": "+4722000008",
+    "email": "orders@skousen.no",
+    "customerNumber": "CUST-100058",
+    "branding": {
+      "bannerImage": {
+        "url": "https://cdn.posten.no/branding/banner-8.png",
+        "text": "Banner for Skousen"
+      },
+      "contentImage": {
+        "url": "https://cdn.posten.no/branding/content-8.png",
+        "text": "Content image"
+      },
+      "title": "Your Skousen order is on the way",
+      "description": "Track your parcel and manage delivery preferences in the Posten app.",
+      "storeLink": {
+        "url": "https://skousen.no/orders/1058",
+        "text": "View order in Skousen store"
+      }
+    },
+    "customerService": {
+      "name": "Skousen Customer Service",
+      "url": "https://skousen.no/support"
+    }
+  },
+  "recipient": {
+    "name": "Recipient Person 59",
+    "postalCode": "0150",
+    "city": "Oslo",
+    "address": "Kirkeveien 22",
+    "phoneNumber": "+4791000008",
+    "email": "recipient59@example.com",
+    "sharedAccessPhoneNumber": null,
+    "bankidAuthenticated": true
+  },
+  "productName": "home_delivery_parcel_return",
+  "productGroup": "pickup_point",
+  "events": [
+    {
+      "description": "Event 0 for parcel TESTPARCEL0001000008 - status update from terminal",
+      "date": "2026-05-15T01:00:00Z",
+      "city": "Oslo",
+      "countryCode": "NO",
+      "type": "pre_notified",
+      "cause": null,
+      "whatsNextDescription": "Your parcel will arrive within 2-3 business days",
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 1 for parcel TESTPARCEL0001000008 - status update from terminal",
+      "date": "2026-05-15T07:00:00Z",
+      "city": "Bergen",
+      "countryCode": "NO",
+      "type": "attempted_delivery",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    },
+    {
+      "description": "Event 2 for parcel TESTPARCEL0001000008 - status update from terminal",
+      "date": "2026-05-15T13:00:00Z",
+      "city": "Trondheim",
+      "countryCode": "NO",
+      "type": "ready_for_pick_up",
+      "cause": "mailbox_delivery_failed",
+      "whatsNextDescription": null,
+      "displayStatus": "hidden"
+    },
+    {
+      "description": "Event 3 for parcel TESTPARCEL0001000008 - status update from terminal",
+      "date": "2026-05-15T19:00:00Z",
+      "city": "Stavanger",
+      "countryCode": "NO",
+      "type": "delivered",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 4 for parcel TESTPARCEL0001000008 - status update from terminal",
+      "date": "2026-05-16T01:00:00Z",
+      "city": "Drammen",
+      "countryCode": "NO",
+      "type": "handed_in",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    },
+    {
+      "description": "Event 5 for parcel TESTPARCEL0001000008 - status update from terminal",
+      "date": "2026-05-16T07:00:00Z",
+      "city": "Troms\u00f8",
+      "countryCode": "NO",
+      "type": "updated_delivery_information",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "hidden"
+    }
+  ],
+  "features": [
+    {
+      "type": "registered_letter",
+      "url": "https://posten.no/features/registered_letter",
+      "title": "Feature registered_letter",
+      "description": "Detailed description for feature registered_letter on parcel index 8",
+      "date": null
+    },
+    {
+      "type": "personal_delivery_receipt",
+      "url": "https://posten.no/features/personal_delivery_receipt",
+      "title": "Feature personal_delivery_receipt",
+      "description": "Detailed description for feature personal_delivery_receipt on parcel index 8",
+      "date": null
+    }
+  ],
+  "expiresAt": "2026-06-09T10:00:00Z",
+  "parcelNumbersInConsignment": [
+    "TESTPARCEL0001000058"
+  ],
+  "customsTax": null,
+  "customsInformationRequirements": null,
+  "rewards": null
+}

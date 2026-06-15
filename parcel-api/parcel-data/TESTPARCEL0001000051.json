@@ -1,0 +1,166 @@
+{
+  "parcelNumber": "TESTPARCEL0001000051",
+  "consignmentNumber": "CONS0002000051",
+  "status": "underway",
+  "userChosenName": null,
+  "direction": "receive",
+  "transport": {
+    "type": "glow",
+    "electric": false,
+    "fuelType": "electric"
+  },
+  "dimensions": {
+    "lengthInCm": 21,
+    "widthInCm": 16,
+    "heightInCm": 11
+  },
+  "weightInKg": 1.2,
+  "delivery": {
+    "type": "parcel_box_delivery",
+    "pickUpPointId": "67890",
+    "deadlineDate": "2026-05-19T10:00:00Z",
+    "extendDeadlineTo": "2026-05-22T10:00:00Z",
+    "pickUpCode": "P100051",
+    "pickUpQrCode": "qr-testparcel0001000051",
+    "shelfNumber": "A1",
+    "gateCode": "G1001",
+    "pinCode": null,
+    "qrCode": null,
+    "permission": "can_open",
+    "bankidAuthenticated": "pending",
+    "options": [
+      "notify_when_collectable",
+      "early_return",
+      "change_pickup_point"
+    ],
+    "progressPercentageBasedOnEvents": 7,
+    "deliveryTime": {
+      "date": "2026-05-17T08:00:00Z",
+      "deliveryWindow": {
+        "start": "2026-05-17T08:00:00Z",
+        "end": "2026-05-17T10:00:00Z"
+      }
+    }
+  },
+  "sender": {
+    "name": "Kiwi",
+    "iconUrl": "https://cdn.posten.no/icons/kiwi.png",
+    "phoneNumber": "+4722000001",
+    "email": "orders@kiwi.no",
+    "customerNumber": "CUST-100051",
+    "branding": {
+      "bannerImage": {
+        "url": "https://cdn.posten.no/branding/banner-1.png",
+        "text": "Banner for Kiwi"
+      },
+      "contentImage": {
+        "url": "https://cdn.posten.no/branding/content-1.png",
+        "text": "Content image"
+      },
+      "title": "Your Kiwi order is on the way",
+      "description": "Track your parcel and manage delivery preferences in the Posten app.",
+      "storeLink": {
+        "url": "https://kiwi.no/orders/1051",
+        "text": "View order in Kiwi store"
+      }
+    },
+    "customerService": {
+      "name": "Kiwi Customer Service",
+      "url": "https://kiwi.no/support"
+    }
+  },
+  "recipient": {
+    "name": "Recipient Person 52",
+    "postalCode": "0250",
+    "city": "Bergen",
+    "address": "Storgata 12",
+    "phoneNumber": "+4791000001",
+    "email": "recipient52@example.com",
+    "sharedAccessPhoneNumber": null,
+    "bankidAuthenticated": false
+  },
+  "productName": "norway_parcel_express",
+  "productGroup": "mailbox",
+  "events": [
+    {
+      "description": "Event 0 for parcel TESTPARCEL0001000001 - status update from terminal",
+      "date": "2026-05-15T08:00:00Z",
+      "city": "Bergen",
+      "countryCode": "NO",
+      "type": "pre_notified",
+      "cause": null,
+      "whatsNextDescription": "Your parcel will arrive within 2-3 business days",
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 1 for parcel TESTPARCEL0001000001 - status update from terminal",
+      "date": "2026-05-15T14:00:00Z",
+      "city": "Trondheim",
+      "countryCode": "NO",
+      "type": "attempted_delivery",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    },
+    {
+      "description": "Event 2 for parcel TESTPARCEL0001000001 - status update from terminal",
+      "date": "2026-05-15T20:00:00Z",
+      "city": "Stavanger",
+      "countryCode": "NO",
+      "type": "ready_for_pick_up",
+      "cause": "mailbox_delivery_failed",
+      "whatsNextDescription": null,
+      "displayStatus": "hidden"
+    },
+    {
+      "description": "Event 3 for parcel TESTPARCEL0001000001 - status update from terminal",
+      "date": "2026-05-16T02:00:00Z",
+      "city": "Drammen",
+      "countryCode": "NO",
+      "type": "delivered",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 4 for parcel TESTPARCEL0001000001 - status update from terminal",
+      "date": "2026-05-16T08:00:00Z",
+      "city": "Troms\u00f8",
+      "countryCode": "NO",
+      "type": "handed_in",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    }
+  ],
+  "features": [
+    {
+      "type": "registered_letter",
+      "url": "https://posten.no/features/registered_letter",
+      "title": "Feature registered_letter",
+      "description": "Detailed description for feature registered_letter on parcel index 1",
+      "date": null
+    },
+    {
+      "type": "personal_delivery_receipt",
+      "url": "https://posten.no/features/personal_delivery_receipt",
+      "title": "Feature personal_delivery_receipt",
+      "description": "Detailed description for feature personal_delivery_receipt on parcel index 1",
+      "date": null
+    },
+    {
+      "type": "contains_alcohol",
+      "url": "https://posten.no/features/contains_alcohol",
+      "title": "Feature contains_alcohol",
+      "description": "Detailed description for feature contains_alcohol on parcel index 1",
+      "date": null
+    }
+  ],
+  "expiresAt": "2026-06-02T10:00:00Z",
+  "parcelNumbersInConsignment": [
+    "TESTPARCEL0001000051"
+  ],
+  "customsTax": null,
+  "customsInformationRequirements": null,
+  "rewards": null
+}

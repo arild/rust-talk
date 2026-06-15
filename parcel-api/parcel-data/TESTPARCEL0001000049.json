@@ -1,0 +1,197 @@
+{
+  "parcelNumber": "TESTPARCEL0001000049",
+  "consignmentNumber": "CONS0002000049",
+  "status": "notified",
+  "userChosenName": null,
+  "direction": "receive",
+  "transport": {
+    "type": "glow",
+    "electric": false,
+    "fuelType": "muscle_powered"
+  },
+  "dimensions": {
+    "lengthInCm": 39,
+    "widthInCm": 24,
+    "heightInCm": 14
+  },
+  "weightInKg": 6.8,
+  "delivery": {
+    "type": "mailbox_delivery",
+    "pickUpPointId": "11111",
+    "deadlineDate": "2026-07-06T10:00:00Z",
+    "extendDeadlineTo": "2026-07-09T10:00:00Z",
+    "pickUpCode": "P100049",
+    "pickUpQrCode": "qr-testparcel0001000049",
+    "shelfNumber": "A49",
+    "gateCode": null,
+    "pinCode": null,
+    "qrCode": null,
+    "permission": "can_open",
+    "bankidAuthenticated": "pending",
+    "options": [
+      "notify_when_collectable",
+      "early_return",
+      "change_pickup_point"
+    ],
+    "progressPercentageBasedOnEvents": 40,
+    "deliveryTime": {
+      "date": "2026-05-15T08:00:00Z",
+      "deliveryWindow": {
+        "start": "2026-05-15T08:00:00Z",
+        "end": "2026-05-15T10:00:00Z"
+      }
+    }
+  },
+  "sender": {
+    "name": "Cubus",
+    "iconUrl": "https://cdn.posten.no/icons/cubus.png",
+    "phoneNumber": "+4722000049",
+    "email": "orders@cubus.no",
+    "customerNumber": "CUST-100049",
+    "branding": {
+      "bannerImage": {
+        "url": "https://cdn.posten.no/branding/banner-9.png",
+        "text": "Banner for Cubus"
+      },
+      "contentImage": {
+        "url": "https://cdn.posten.no/branding/content-9.png",
+        "text": "Content image"
+      },
+      "title": "Your Cubus order is on the way",
+      "description": "Track your parcel and manage delivery preferences in the Posten app.",
+      "storeLink": {
+        "url": "https://cubus.no/orders/1049",
+        "text": "View order in Cubus store"
+      }
+    },
+    "customerService": {
+      "name": "Cubus Customer Service",
+      "url": "https://cubus.no/support"
+    }
+  },
+  "recipient": {
+    "name": "Recipient Person 50",
+    "postalCode": "0250",
+    "city": "Bergen",
+    "address": "Grensen 7",
+    "phoneNumber": "+4791000049",
+    "email": "recipient50@example.com",
+    "sharedAccessPhoneNumber": null,
+    "bankidAuthenticated": false
+  },
+  "productName": "business_parcel_express_overnight",
+  "productGroup": "mailbox",
+  "events": [
+    {
+      "description": "Event 0 for parcel TESTPARCEL0001000049 - status update from terminal",
+      "date": "2026-05-13T08:00:00Z",
+      "city": "Bergen",
+      "countryCode": "NO",
+      "type": "pre_notified",
+      "cause": null,
+      "whatsNextDescription": "Your parcel will arrive within 2-3 business days",
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 1 for parcel TESTPARCEL0001000049 - status update from terminal",
+      "date": "2026-05-13T14:00:00Z",
+      "city": "Trondheim",
+      "countryCode": "NO",
+      "type": "attempted_delivery",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    },
+    {
+      "description": "Event 2 for parcel TESTPARCEL0001000049 - status update from terminal",
+      "date": "2026-05-13T20:00:00Z",
+      "city": "Stavanger",
+      "countryCode": "NO",
+      "type": "ready_for_pick_up",
+      "cause": "mailbox_delivery_failed",
+      "whatsNextDescription": null,
+      "displayStatus": "hidden"
+    },
+    {
+      "description": "Event 3 for parcel TESTPARCEL0001000049 - status update from terminal",
+      "date": "2026-05-14T02:00:00Z",
+      "city": "Drammen",
+      "countryCode": "NO",
+      "type": "delivered",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 4 for parcel TESTPARCEL0001000049 - status update from terminal",
+      "date": "2026-05-14T08:00:00Z",
+      "city": "Troms\u00f8",
+      "countryCode": "NO",
+      "type": "handed_in",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    }
+  ],
+  "features": [
+    {
+      "type": "early_return",
+      "url": "https://posten.no/features/early_return",
+      "title": "Feature early_return",
+      "description": "Detailed description for feature early_return on parcel index 49",
+      "date": null
+    },
+    {
+      "type": "personal_delivery_receipt",
+      "url": "https://posten.no/features/personal_delivery_receipt",
+      "title": "Feature personal_delivery_receipt",
+      "description": "Detailed description for feature personal_delivery_receipt on parcel index 49",
+      "date": null
+    },
+    {
+      "type": "registered_letter",
+      "url": "https://posten.no/features/registered_letter",
+      "title": "Feature registered_letter",
+      "description": "Detailed description for feature registered_letter on parcel index 49",
+      "date": null
+    }
+  ],
+  "expiresAt": "2026-07-20T10:00:00Z",
+  "parcelNumbersInConsignment": [
+    "TESTPARCEL0001000049"
+  ],
+  "customsTax": {
+    "type": "flexible_payment_customs_tax",
+    "status": "open",
+    "totalAmountInOre": 17400,
+    "parcelContent": [
+      {
+        "description": "T-shirt",
+        "currencyCode": "USD",
+        "amountInSubunit": 1999
+      },
+      {
+        "description": "Headphones",
+        "currencyCode": "USD",
+        "amountInSubunit": 9999
+      }
+    ],
+    "customsPriceList": [
+      {
+        "description": "VAT",
+        "amountInOre": 7500
+      },
+      {
+        "description": "Processing fee",
+        "amountInOre": 5000
+      }
+    ],
+    "dueDate": "2026-07-06T10:00:00Z"
+  },
+  "customsInformationRequirements": {
+    "documentsRequired": true,
+    "informationProvided": false,
+    "identificationRequired": false
+  },
+  "rewards": null
+}

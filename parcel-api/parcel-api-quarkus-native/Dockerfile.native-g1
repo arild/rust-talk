@@ -1,0 +1,59 @@
+# syntax=docker/dockerfile:1.7
+#
+# Oracle GraalVM build of parcel-api-quarkus-native with the G1 garbage collector
+# (`--gc=G1`), which Mandrel / community GraalVM do NOT ship (they're Serial-GC
+# only). Same source as Dockerfile.native — the only differences are the builder
+# (Oracle GraalVM instead of Mandrel) and the one `--gc=G1` native-image flag.
+# Build context is the parent (parcel-api/):
+#   docker build --load -t parcel-api-quarkus-native-g1 -f parcel-api-quarkus-native/Dockerfile.native-g1 ../
+#
+# Oracle GraalVM is fetched from its public tarball (GFTC license — no registry
+# login). G1 native is Linux AMD64/AArch64 only. We build on UBI9 (glibc 2.34) so
+# the binary matches the ubi9-quarkus-micro-image runtime, exactly like
+# Dockerfile.native. Override GRAALVM_URL for x64 hosts (…_linux-x64_bin.tar.gz).
+ARG GRAALVM_URL=https://download.oracle.com/graalvm/25/latest/graalvm-jdk-25_linux-aarch64_bin.tar.gz
+ARG RUNTIME_IMAGE=quay.io/quarkus/ubi9-quarkus-micro-image:2.0
+
+FROM registry.access.redhat.com/ubi9/ubi:latest AS build
+ARG GRAALVM_URL
+# native-image's C toolchain + the libs it statically/dynamically links.
+RUN dnf install -y --setopt=install_weak_deps=False \
+        gcc glibc-devel zlib-devel libstdc++-devel tar gzip \
+    && dnf clean all
+# Oracle GraalVM bundles native-image (and the G1 GC) — no `gu install` step.
+RUN mkdir -p /opt/graalvm \
+    && curl -fsSL "$GRAALVM_URL" | tar -xz -C /opt/graalvm --strip-components=1
+ENV JAVA_HOME=/opt/graalvm \
+    GRAALVM_HOME=/opt/graalvm \
+    PATH=/opt/graalvm/bin:$PATH
+WORKDIR /code
+
+# Same dependency-cache-first layering as Dockerfile.native.
+COPY parcel-api-quarkus-native/gradlew ./
+COPY parcel-api-quarkus-native/gradle ./gradle
+COPY parcel-api-quarkus-native/settings.gradle.kts parcel-api-quarkus-native/build.gradle.kts parcel-api-quarkus-native/gradle.properties ./
+RUN ./gradlew --no-daemon dependencies >/dev/null 2>&1 || true
+
+ARG APP_BUILD_ID=stable
+COPY parcel-api-quarkus-native/src ./src
+# `--gc=G1` is the whole point of this variant; the rest mirrors Dockerfile.native.
+RUN echo "build id ${APP_BUILD_ID}" \
+    && ./gradlew --no-daemon \
+        -Dquarkus.native.enabled=true \
+        -Dquarkus.package.jar.enabled=false \
+        -Dquarkus.native.additional-build-args=--gc=G1 \
+        quarkusBuild \
+    && cp build/*-runner /code/parcel-api
+
+FROM ${RUNTIME_IMAGE} AS runtime
+WORKDIR /work
+
+COPY --from=build /code/parcel-api /usr/local/bin/parcel-api
+COPY parcel-data /parcel-data
+
+ENV TZ=Europe/Oslo \
+    PARCEL_DATA_DIR=/parcel-data
+
+EXPOSE 8080
+
+ENTRYPOINT ["/usr/local/bin/parcel-api"]

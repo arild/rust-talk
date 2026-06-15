@@ -1,0 +1,207 @@
+{
+  "parcelNumber": "TESTPARCEL0001000041",
+  "consignmentNumber": "CONS0002000041",
+  "status": "archived_by_user",
+  "userChosenName": null,
+  "direction": "receive",
+  "transport": {
+    "type": "postnord",
+    "electric": false,
+    "fuelType": "electric"
+  },
+  "dimensions": {
+    "lengthInCm": 31,
+    "widthInCm": 16,
+    "heightInCm": 21
+  },
+  "weightInKg": 1.2,
+  "delivery": {
+    "type": "parcel_box_delivery",
+    "pickUpPointId": "67890",
+    "deadlineDate": "2026-06-28T10:00:00Z",
+    "extendDeadlineTo": "2026-07-01T10:00:00Z",
+    "pickUpCode": "P100041",
+    "pickUpQrCode": "qr-testparcel0001000041",
+    "shelfNumber": "A41",
+    "gateCode": "G1041",
+    "pinCode": null,
+    "qrCode": null,
+    "permission": "can_open",
+    "bankidAuthenticated": "pending",
+    "options": [
+      "notify_when_collectable",
+      "early_return",
+      "change_pickup_point",
+      "extend_deadline"
+    ],
+    "progressPercentageBasedOnEvents": 85,
+    "deliveryTime": {
+      "date": "2026-05-15T16:00:00Z",
+      "deliveryWindow": {
+        "start": "2026-05-15T16:00:00Z",
+        "end": "2026-05-15T18:00:00Z"
+      }
+    }
+  },
+  "sender": {
+    "name": "Power",
+    "iconUrl": "https://cdn.posten.no/icons/power.png",
+    "phoneNumber": "+4722000041",
+    "email": "orders@power.no",
+    "customerNumber": "CUST-100041",
+    "branding": {
+      "bannerImage": {
+        "url": "https://cdn.posten.no/branding/banner-1.png",
+        "text": "Banner for Power"
+      },
+      "contentImage": {
+        "url": "https://cdn.posten.no/branding/content-1.png",
+        "text": "Content image"
+      },
+      "title": "Your Power order is on the way",
+      "description": "Track your parcel and manage delivery preferences in the Posten app.",
+      "storeLink": {
+        "url": "https://power.no/orders/1041",
+        "text": "View order in Power store"
+      }
+    },
+    "customerService": {
+      "name": "Power Customer Service",
+      "url": "https://power.no/support"
+    }
+  },
+  "recipient": {
+    "name": "Recipient Person 42",
+    "postalCode": "0250",
+    "city": "Bergen",
+    "address": "Storgata 12",
+    "phoneNumber": "+4791000041",
+    "email": "recipient42@example.com",
+    "sharedAccessPhoneNumber": null,
+    "bankidAuthenticated": false
+  },
+  "productName": "unknown",
+  "productGroup": "unknown",
+  "events": [
+    {
+      "description": "Event 0 for parcel TESTPARCEL0001000041 - status update from terminal",
+      "date": "2026-05-13T16:00:00Z",
+      "city": "Bergen",
+      "countryCode": "NO",
+      "type": "pre_notified",
+      "cause": null,
+      "whatsNextDescription": "Your parcel will arrive within 2-3 business days",
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 1 for parcel TESTPARCEL0001000041 - status update from terminal",
+      "date": "2026-05-13T22:00:00Z",
+      "city": "Trondheim",
+      "countryCode": "NO",
+      "type": "attempted_delivery",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    },
+    {
+      "description": "Event 2 for parcel TESTPARCEL0001000041 - status update from terminal",
+      "date": "2026-05-14T04:00:00Z",
+      "city": "Stavanger",
+      "countryCode": "NO",
+      "type": "ready_for_pick_up",
+      "cause": "mailbox_delivery_failed",
+      "whatsNextDescription": null,
+      "displayStatus": "hidden"
+    },
+    {
+      "description": "Event 3 for parcel TESTPARCEL0001000041 - status update from terminal",
+      "date": "2026-05-14T10:00:00Z",
+      "city": "Drammen",
+      "countryCode": "NO",
+      "type": "delivered",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 4 for parcel TESTPARCEL0001000041 - status update from terminal",
+      "date": "2026-05-14T16:00:00Z",
+      "city": "Troms\u00f8",
+      "countryCode": "NO",
+      "type": "handed_in",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    },
+    {
+      "description": "Event 5 for parcel TESTPARCEL0001000041 - status update from terminal",
+      "date": "2026-05-14T22:00:00Z",
+      "city": "Kristiansand",
+      "countryCode": "NO",
+      "type": "updated_delivery_information",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "hidden"
+    },
+    {
+      "description": "Event 6 for parcel TESTPARCEL0001000041 - status update from terminal",
+      "date": "2026-05-15T04:00:00Z",
+      "city": "Sandnes",
+      "countryCode": "NO",
+      "type": "pre_notified",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 7 for parcel TESTPARCEL0001000041 - status update from terminal",
+      "date": "2026-05-15T10:00:00Z",
+      "city": "Oslo",
+      "countryCode": "NO",
+      "type": "attempted_delivery",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    },
+    {
+      "description": "Event 8 for parcel TESTPARCEL0001000041 - status update from terminal",
+      "date": "2026-05-15T16:00:00Z",
+      "city": "Bergen",
+      "countryCode": "NO",
+      "type": "ready_for_pick_up",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "hidden"
+    }
+  ],
+  "features": [
+    {
+      "type": "registered_letter",
+      "url": "https://posten.no/features/registered_letter",
+      "title": "Feature registered_letter",
+      "description": "Detailed description for feature registered_letter on parcel index 41",
+      "date": null
+    },
+    {
+      "type": "share_pickup_access",
+      "url": "https://posten.no/features/share_pickup_access",
+      "title": "Feature share_pickup_access",
+      "description": "Detailed description for feature share_pickup_access on parcel index 41",
+      "date": null
+    },
+    {
+      "type": "early_return",
+      "url": "https://posten.no/features/early_return",
+      "title": "Feature early_return",
+      "description": "Detailed description for feature early_return on parcel index 41",
+      "date": null
+    }
+  ],
+  "expiresAt": "2026-07-12T10:00:00Z",
+  "parcelNumbersInConsignment": [
+    "TESTPARCEL0001000041"
+  ],
+  "customsTax": null,
+  "customsInformationRequirements": null,
+  "rewards": null
+}

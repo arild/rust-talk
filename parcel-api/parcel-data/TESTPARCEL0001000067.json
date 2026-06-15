@@ -1,0 +1,207 @@
+{
+  "parcelNumber": "TESTPARCEL0001000067",
+  "consignmentNumber": "CONS0002000067",
+  "status": "return_underway",
+  "userChosenName": null,
+  "direction": "receive",
+  "transport": {
+    "type": "postnord",
+    "electric": false,
+    "fuelType": "fossil_free"
+  },
+  "dimensions": {
+    "lengthInCm": 37,
+    "widthInCm": 32,
+    "heightInCm": 12
+  },
+  "weightInKg": 5.3999999999999995,
+  "delivery": {
+    "type": "parcel_robot_delivery",
+    "pickUpPointId": "54321",
+    "deadlineDate": "2026-06-04T10:00:00Z",
+    "extendDeadlineTo": "2026-06-07T10:00:00Z",
+    "pickUpCode": "P100067",
+    "pickUpQrCode": "qr-testparcel0001000067",
+    "shelfNumber": "A17",
+    "gateCode": null,
+    "pinCode": "1251",
+    "qrCode": "rqr-testparcel0001000067",
+    "permission": "can_open",
+    "bankidAuthenticated": "pending",
+    "options": [
+      "notify_when_collectable",
+      "early_return",
+      "change_pickup_point",
+      "extend_deadline"
+    ],
+    "progressPercentageBasedOnEvents": 18,
+    "deliveryTime": {
+      "date": "2026-05-16T16:00:00Z",
+      "deliveryWindow": {
+        "start": "2026-05-16T16:00:00Z",
+        "end": "2026-05-16T18:00:00Z"
+      }
+    }
+  },
+  "sender": {
+    "name": "Felleskjopet",
+    "iconUrl": "https://cdn.posten.no/icons/felleskjopet.png",
+    "phoneNumber": "+4722000017",
+    "email": "orders@felleskjopet.no",
+    "customerNumber": "CUST-100067",
+    "branding": {
+      "bannerImage": {
+        "url": "https://cdn.posten.no/branding/banner-7.png",
+        "text": "Banner for Felleskjopet"
+      },
+      "contentImage": {
+        "url": "https://cdn.posten.no/branding/content-7.png",
+        "text": "Content image"
+      },
+      "title": "Your Felleskjopet order is on the way",
+      "description": "Track your parcel and manage delivery preferences in the Posten app.",
+      "storeLink": {
+        "url": "https://felleskjopet.no/orders/1067",
+        "text": "View order in Felleskjopet store"
+      }
+    },
+    "customerService": {
+      "name": "Felleskjopet Customer Service",
+      "url": "https://felleskjopet.no/support"
+    }
+  },
+  "recipient": {
+    "name": "Recipient Person 68",
+    "postalCode": "0250",
+    "city": "Bergen",
+    "address": "Bygd\u00f8y all\u00e9 5",
+    "phoneNumber": "+4791000017",
+    "email": "recipient68@example.com",
+    "sharedAccessPhoneNumber": null,
+    "bankidAuthenticated": false
+  },
+  "productName": "parcel_private_to_mailbox",
+  "productGroup": "unknown",
+  "events": [
+    {
+      "description": "Event 0 for parcel TESTPARCEL0001000017 - status update from terminal",
+      "date": "2026-05-14T16:00:00Z",
+      "city": "Bergen",
+      "countryCode": "NO",
+      "type": "pre_notified",
+      "cause": null,
+      "whatsNextDescription": "Your parcel will arrive within 2-3 business days",
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 1 for parcel TESTPARCEL0001000017 - status update from terminal",
+      "date": "2026-05-14T22:00:00Z",
+      "city": "Trondheim",
+      "countryCode": "NO",
+      "type": "attempted_delivery",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    },
+    {
+      "description": "Event 2 for parcel TESTPARCEL0001000017 - status update from terminal",
+      "date": "2026-05-15T04:00:00Z",
+      "city": "Stavanger",
+      "countryCode": "NO",
+      "type": "ready_for_pick_up",
+      "cause": "mailbox_delivery_failed",
+      "whatsNextDescription": null,
+      "displayStatus": "hidden"
+    },
+    {
+      "description": "Event 3 for parcel TESTPARCEL0001000017 - status update from terminal",
+      "date": "2026-05-15T10:00:00Z",
+      "city": "Drammen",
+      "countryCode": "NO",
+      "type": "delivered",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 4 for parcel TESTPARCEL0001000017 - status update from terminal",
+      "date": "2026-05-15T16:00:00Z",
+      "city": "Troms\u00f8",
+      "countryCode": "NO",
+      "type": "handed_in",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    },
+    {
+      "description": "Event 5 for parcel TESTPARCEL0001000017 - status update from terminal",
+      "date": "2026-05-15T22:00:00Z",
+      "city": "Kristiansand",
+      "countryCode": "NO",
+      "type": "updated_delivery_information",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "hidden"
+    },
+    {
+      "description": "Event 6 for parcel TESTPARCEL0001000017 - status update from terminal",
+      "date": "2026-05-16T04:00:00Z",
+      "city": "Sandnes",
+      "countryCode": "NO",
+      "type": "pre_notified",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 7 for parcel TESTPARCEL0001000017 - status update from terminal",
+      "date": "2026-05-16T10:00:00Z",
+      "city": "Oslo",
+      "countryCode": "NO",
+      "type": "attempted_delivery",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    },
+    {
+      "description": "Event 8 for parcel TESTPARCEL0001000017 - status update from terminal",
+      "date": "2026-05-16T16:00:00Z",
+      "city": "Bergen",
+      "countryCode": "NO",
+      "type": "ready_for_pick_up",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "hidden"
+    }
+  ],
+  "features": [
+    {
+      "type": "user_must_show_id",
+      "url": "https://posten.no/features/user_must_show_id",
+      "title": "Feature user_must_show_id",
+      "description": "Detailed description for feature user_must_show_id on parcel index 17",
+      "date": null
+    },
+    {
+      "type": "contains_alcohol",
+      "url": "https://posten.no/features/contains_alcohol",
+      "title": "Feature contains_alcohol",
+      "description": "Detailed description for feature contains_alcohol on parcel index 17",
+      "date": null
+    },
+    {
+      "type": "ecolabel_swan",
+      "url": "https://posten.no/features/ecolabel_swan",
+      "title": "Feature ecolabel_swan",
+      "description": "Detailed description for feature ecolabel_swan on parcel index 17",
+      "date": null
+    }
+  ],
+  "expiresAt": "2026-06-18T10:00:00Z",
+  "parcelNumbersInConsignment": [
+    "TESTPARCEL0001000067"
+  ],
+  "customsTax": null,
+  "customsInformationRequirements": null,
+  "rewards": null
+}

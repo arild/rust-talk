@@ -1,0 +1,20 @@
+root = true
+
+[*]
+indent_style = space
+end_of_line = lf
+charset = utf-8
+trim_trailing_whitespace = true
+insert_final_newline = true
+
+[*.{kt,kts}]
+indent_size = 4
+ij_kotlin_allow_trailing_comma = true
+ij_kotlin_allow_trailing_comma_on_call_site = true
+ij_kotlin_line_break_after_multiline_when_entry = false
+
+[*.xml]
+indent_size = 4
+
+[*.{json, yml}]
+indent_size = 2

@@ -1,0 +1,71 @@
+# syntax=docker/dockerfile:1.7
+#
+# GraalVM-native build of parcel-api-quarkus-native. Build context is the parent
+# directory (parcel-api/), so paths below are relative to that. Build with:
+#   docker build --load -t parcel-api-quarkus-native -f parcel-api-quarkus-native/Dockerfile.native ../
+# (run from parcel-api/parcel-api-quarkus-native/)
+#
+# This is the AOT-compiled sibling of ../parcel-api-quarkus-jvm — the two carry
+# the same source by design (the comparison only holds if the code is identical).
+# Keep them in sync: a change to one's src/ must be mirrored in the other.
+#
+# Unlike the JVM Dockerfile — which just packages a fast-jar the host already
+# built — the native executable is compiled end-to-end inside the Mandrel
+# builder stage with `native-image`, mirroring the rust/c/go multi-stage builds
+# so `bench.sh BUILD=1` can produce it without a host toolchain.
+#
+# native-image is memory-hungry: give Docker ~6 GB+ or the build gets OOM-killed
+# mid-compile. The compile itself takes a few minutes — that's the headline
+# trade-off of native vs the JVM fast-jar, and it shows up in the bench's
+# "Build (s)" column.
+#
+# Image tags are ARGs so they can be pinned without editing the file. If the
+# jdk-25 Mandrel tag isn't published for your platform, override with e.g.
+#   --build-arg MANDREL_IMAGE=quay.io/quarkus/ubi9-quarkus-mandrel-builder-image:jdk-21
+# (the app targets JDK 25 bytecode, so the builder JDK must be >= 25 to match;
+# drop the toolchain to 21 in build.gradle.kts if you fall back to a 21 builder).
+ARG MANDREL_IMAGE=quay.io/quarkus/ubi9-quarkus-mandrel-builder-image:jdk-25
+ARG RUNTIME_IMAGE=quay.io/quarkus/ubi9-quarkus-micro-image:2.0
+
+FROM ${MANDREL_IMAGE} AS build
+USER root
+WORKDIR /code
+
+# Build config + wrapper first so the dependency-download layer caches
+# independently of source edits (the native-image step always reruns, but
+# re-pulling the Quarkus/Kotlin deps every time is wasteful).
+COPY parcel-api-quarkus-native/gradlew ./
+COPY parcel-api-quarkus-native/gradle ./gradle
+COPY parcel-api-quarkus-native/settings.gradle.kts parcel-api-quarkus-native/build.gradle.kts parcel-api-quarkus-native/gradle.properties ./
+RUN ./gradlew --no-daemon dependencies >/dev/null 2>&1 || true
+
+# bench.sh passes --build-arg APP_BUILD_ID=$(date +%s%N) to force a fresh
+# app-code compile while keeping the cached dep layer above.
+ARG APP_BUILD_ID=stable
+COPY parcel-api-quarkus-native/src ./src
+# `quarkusBuild` (not the lifecycle `build`) + jar.enabled=false: with native
+# enabled, asking for both a fast-jar and a native binary fails the build with
+# "Outputting both native and JAR packages is not currently supported".
+RUN echo "build id ${APP_BUILD_ID}" \
+    && ./gradlew --no-daemon -Dquarkus.native.enabled=true -Dquarkus.package.jar.enabled=false quarkusBuild \
+    && cp build/*-runner /code/parcel-api
+
+# The runtime base MUST match the builder's glibc generation. The builder is
+# UBI9 (glibc 2.34), so the binary needs GLIBC_2.3x symbols — the *UBI9* Quarkus
+# micro image. The plain `quarkus-micro-image` is UBI8 (glibc 2.28) and the binary
+# crashes on boot with "GLIBC_2.34 not found". ubi9-quarkus-micro-image ships
+# exactly the libs a UBI9 Mandrel binary links (glibc, zlib, libstdc++). RSS (the
+# headline metric) is unaffected by the base; only image size differs, reported
+# separately. If you change MANDREL_IMAGE's UBI generation, change this to match.
+FROM ${RUNTIME_IMAGE} AS runtime
+WORKDIR /work
+
+COPY --from=build /code/parcel-api /usr/local/bin/parcel-api
+COPY parcel-data /parcel-data
+
+ENV TZ=Europe/Oslo \
+    PARCEL_DATA_DIR=/parcel-data
+
+EXPOSE 8080
+
+ENTRYPOINT ["/usr/local/bin/parcel-api"]

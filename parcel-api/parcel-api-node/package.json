@@ -1,0 +1,18 @@
+{
+  "//": "Dependency policy: any third-party dependency must be a version published at least 1 week ago (supply-chain safety). Current deps: fastify (HTTP framework). Pin exact versions and keep package-lock.json in sync so the image builds with `npm ci`.",
+  "name": "parcel-api-node",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "description": "Node.js (Fastify + cluster) port of parcel-api.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "fastify": "5.8.5"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

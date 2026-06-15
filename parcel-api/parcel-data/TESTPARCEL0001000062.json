@@ -1,0 +1,158 @@
+{
+  "parcelNumber": "TESTPARCEL0001000062",
+  "consignmentNumber": "CONS0002000062",
+  "status": "archived",
+  "userChosenName": "My package from Rema 1000",
+  "direction": "sent",
+  "transport": {
+    "type": "posten",
+    "electric": true,
+    "fuelType": "fossil_free"
+  },
+  "dimensions": {
+    "lengthInCm": 32,
+    "widthInCm": 27,
+    "heightInCm": 22
+  },
+  "weightInKg": 1.9,
+  "delivery": {
+    "type": "parcel_robot_delivery",
+    "pickUpPointId": "54321",
+    "deadlineDate": "2026-05-30T10:00:00Z",
+    "extendDeadlineTo": "2026-06-02T10:00:00Z",
+    "pickUpCode": "P100062",
+    "pickUpQrCode": "qr-testparcel0001000062",
+    "shelfNumber": "A12",
+    "gateCode": null,
+    "pinCode": "1246",
+    "qrCode": "rqr-testparcel0001000062",
+    "permission": "can_collect",
+    "bankidAuthenticated": "not_applicable",
+    "options": [
+      "notify_when_collectable",
+      "early_return"
+    ],
+    "progressPercentageBasedOnEvents": 84,
+    "deliveryTime": {
+      "date": "2026-05-16T21:00:00Z",
+      "deliveryWindow": {
+        "start": "2026-05-16T21:00:00Z",
+        "end": "2026-05-16T23:00:00Z"
+      }
+    }
+  },
+  "sender": {
+    "name": "Rema 1000",
+    "iconUrl": "https://cdn.posten.no/icons/rema1000.png",
+    "phoneNumber": "+4722000012",
+    "email": "orders@rema1000.no",
+    "customerNumber": "CUST-100062",
+    "branding": {
+      "bannerImage": {
+        "url": "https://cdn.posten.no/branding/banner-2.png",
+        "text": "Banner for Rema 1000"
+      },
+      "contentImage": {
+        "url": "https://cdn.posten.no/branding/content-2.png",
+        "text": "Content image"
+      },
+      "title": "Your Rema 1000 order is on the way",
+      "description": "Track your parcel and manage delivery preferences in the Posten app.",
+      "storeLink": {
+        "url": "https://rema1000.no/orders/1062",
+        "text": "View order in Rema 1000 store"
+      }
+    },
+    "customerService": {
+      "name": "Rema 1000 Customer Service",
+      "url": "https://rema1000.no/support"
+    }
+  },
+  "recipient": {
+    "name": "Recipient Person 63",
+    "postalCode": "0550",
+    "city": "Drammen",
+    "address": "Bygd\u00f8y all\u00e9 5",
+    "phoneNumber": "+4791000012",
+    "email": "recipient63@example.com",
+    "sharedAccessPhoneNumber": null,
+    "bankidAuthenticated": true
+  },
+  "productName": "bring_pack",
+  "productGroup": "return",
+  "events": [
+    {
+      "description": "Event 0 for parcel TESTPARCEL0001000012 - status update from terminal",
+      "date": "2026-05-14T21:00:00Z",
+      "city": "Drammen",
+      "countryCode": "NO",
+      "type": "pre_notified",
+      "cause": null,
+      "whatsNextDescription": "Your parcel will arrive within 2-3 business days",
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 1 for parcel TESTPARCEL0001000012 - status update from terminal",
+      "date": "2026-05-15T03:00:00Z",
+      "city": "Troms\u00f8",
+      "countryCode": "NO",
+      "type": "attempted_delivery",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    },
+    {
+      "description": "Event 2 for parcel TESTPARCEL0001000012 - status update from terminal",
+      "date": "2026-05-15T09:00:00Z",
+      "city": "Kristiansand",
+      "countryCode": "NO",
+      "type": "ready_for_pick_up",
+      "cause": "mailbox_delivery_failed",
+      "whatsNextDescription": null,
+      "displayStatus": "hidden"
+    },
+    {
+      "description": "Event 3 for parcel TESTPARCEL0001000012 - status update from terminal",
+      "date": "2026-05-15T15:00:00Z",
+      "city": "Sandnes",
+      "countryCode": "NO",
+      "type": "delivered",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "significant"
+    }
+  ],
+  "features": [
+    {
+      "type": "ecolabel_swan",
+      "url": "https://posten.no/features/ecolabel_swan",
+      "title": "Feature ecolabel_swan",
+      "description": "Detailed description for feature ecolabel_swan on parcel index 12",
+      "date": null
+    },
+    {
+      "type": "share_pickup_access",
+      "url": "https://posten.no/features/share_pickup_access",
+      "title": "Feature share_pickup_access",
+      "description": "Detailed description for feature share_pickup_access on parcel index 12",
+      "date": null
+    }
+  ],
+  "expiresAt": "2026-06-13T10:00:00Z",
+  "parcelNumbersInConsignment": [
+    "TESTPARCEL0001000062"
+  ],
+  "customsTax": null,
+  "customsInformationRequirements": null,
+  "rewards": {
+    "rewardsEarnings": [
+      {
+        "validFrom": "2026-05-15T10:00:00Z",
+        "validTo": "2026-06-14T10:00:00Z",
+        "type": "earn_coins",
+        "text": "Earn coins on this delivery",
+        "coins": 60
+      }
+    ]
+  }
+}

@@ -1,0 +1,25 @@
+server:
+  port: 8080
+  shutdown: graceful
+  servlet:
+    context-path: /parcel-api
+
+spring:
+  application:
+    name: parcel-api
+  jackson:
+    default-property-inclusion: non_null
+
+springdoc:
+  api-docs:
+    version: openapi_3_0
+  trim-kotlin-indent: true
+  swagger-ui:
+    operations-sorter: method
+    tagsSorter: alpha
+
+# Override via PARCEL_DATA_DIR env var. Default points at the shared folder one
+# level up (works for `./gradlew bootRun`); Docker overrides to /parcel-data.
+parcel:
+  data:
+    dir: ../parcel-data

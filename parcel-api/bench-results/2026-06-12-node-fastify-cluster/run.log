@@ -1,0 +1,106 @@
+### node (fastify+cluster) ###
+==> bench dir: bench-results/2026-06-12-node-fastify-cluster
+==> setup loader on network bench-net
+==> build parcel-api-node
+#0 building with "default" instance using docker-container driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.47kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 DONE 0.5s
+
+#3 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#3 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e done
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/node:22-bookworm-slim
+#4 DONE 0.2s
+
+#5 [internal] load metadata for gcr.io/distroless/nodejs22-debian12:latest
+#5 DONE 0.3s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 2B done
+#6 DONE 0.0s
+
+#7 [build 1/5] FROM docker.io/library/node:22-bookworm-slim@sha256:e21fc383b50d5347dc7a9f1cae45b8f4e2f0d39f7ade28e4eef7d2934522b752
+#7 resolve docker.io/library/node:22-bookworm-slim@sha256:e21fc383b50d5347dc7a9f1cae45b8f4e2f0d39f7ade28e4eef7d2934522b752 done
+#7 DONE 0.0s
+
+#8 [runtime 1/5] FROM gcr.io/distroless/nodejs22-debian12:latest@sha256:8a3e96fe3345b5d83ecec2066e7c498139a02a6d1214e4f6c39f9ce359f3f5bc
+#8 resolve gcr.io/distroless/nodejs22-debian12:latest@sha256:8a3e96fe3345b5d83ecec2066e7c498139a02a6d1214e4f6c39f9ce359f3f5bc done
+#8 DONE 0.0s
+
+#9 [internal] load build context
+#9 transferring context: 6.06kB 0.4s done
+#9 DONE 0.4s
+
+#10 [build 5/5] COPY parcel-api-node/*.js ./
+#10 CACHED
+
+#11 [runtime 2/5] WORKDIR /app
+#11 CACHED
+
+#12 [build 2/5] WORKDIR /app
+#12 CACHED
+
+#13 [build 3/5] COPY parcel-api-node/package.json parcel-api-node/package-lock.json ./
+#13 CACHED
+
+#14 [build 4/5] RUN npm ci --omit=dev --no-audit --no-fund
+#14 CACHED
+
+#15 [runtime 3/5] COPY --from=build /app/node_modules ./node_modules
+#15 CACHED
+
+#16 [runtime 4/5] COPY --from=build /app/package.json /app/*.js ./
+#16 CACHED
+
+#17 [runtime 5/5] COPY parcel-data /parcel-data
+#17 CACHED
+
+#18 exporting to docker image format
+#18 exporting layers done
+#18 exporting manifest sha256:8f197aae96a82ae3d4d71858fa743477f2d550364abe10932b9d4250b482bb2c done
+#18 exporting config sha256:c8536c969b42537412b08d430d9111915618f145a3ae055f78025bfc056f69c9 done
+#18 sending tarball
+#18 sending tarball 1.1s done
+#18 DONE 1.1s
+
+#19 importing to docker
+#19 DONE 0.0s
+    build: 2s
+==> node (parcel-api-node)
+    artifact:  7.0 MiB (/app)
+    image:     158.3 MiB
+    build:     2s
+    cold-start 1/10: 0.299s
+    cold-start 2/10: 0.294s
+    cold-start 3/10: 0.296s
+    cold-start 4/10: 0.314s
+    cold-start 5/10: 0.378s
+    cold-start 6/10: 0.298s
+    cold-start 7/10: 0.297s
+    cold-start 8/10: 0.283s
+    cold-start 9/10: 0.324s
+    cold-start 10/10: 0.294s
+    idle RSS:  93.1 MiB
+    phase 1: 5s warmup vegeta workers=1...
+    warm:  538 req @ 107.37 req/s, RSS 94.1 MiB, CPU 0.81 cores
+    phase 2: 15s ramp vegeta workers=100...
+    ramp:  4572 req @ 298.45 req/s
+    phase 3: 30s steady vegeta workers=200...
+    peak:  9340 req @ 303.75 req/s, RSS 168.5 MiB, CPU 2.25 cores
+    total: 14450 req over 60s (steady = 303.75 req/s)
+
+Variant                | Build (s) | Median (s) | p95 (s)  | Idle (MiB) | Warm (MiB) | Warm CPU   | Peak (MiB) | Peak CPU   | Requests   | Load (s) | Req/s  
+-----------------------+-----------+------------+----------+------------+------------+------------+------------+------------+------------+----------+--------
+node                   | 2         | 0.297      | 0.354    | 93.1       | 94.1       | 0.81       | 168.5      | 2.25       | 14450      | 60       | 303.75 
+
+Variant                | Artifact (MiB)  | Image (MiB)    
+-----------------------+-----------------+----------------
+node                   | 7.0             | 158.3          
+wrote bench-results/2026-06-12-node-fastify-cluster/bench-graph.png
+### DONE ###

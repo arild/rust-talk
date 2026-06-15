@@ -1,0 +1,320 @@
+### node ###
+==> bench dir: bench-results/2026-06-12-node-c-go
+==> setup loader on network bench-net
+==> build parcel-api-node
+#0 building with "default" instance using docker-container driver
+
+#1 [internal] booting buildkit
+#1 starting container buildx_buildkit_default
+#1 starting container buildx_buildkit_default 0.5s done
+#1 DONE 0.5s
+
+#2 [internal] load build definition from Dockerfile
+#2 transferring dockerfile: 1.17kB done
+#2 DONE 0.0s
+
+#3 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#3 DONE 1.3s
+
+#4 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#4 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e done
+#4 CACHED
+
+#5 [internal] load metadata for gcr.io/distroless/nodejs22-debian12:latest
+#5 DONE 0.5s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 2B done
+#6 DONE 0.0s
+
+#7 [1/5] FROM gcr.io/distroless/nodejs22-debian12:latest@sha256:8a3e96fe3345b5d83ecec2066e7c498139a02a6d1214e4f6c39f9ce359f3f5bc
+#7 resolve gcr.io/distroless/nodejs22-debian12:latest@sha256:8a3e96fe3345b5d83ecec2066e7c498139a02a6d1214e4f6c39f9ce359f3f5bc done
+#7 DONE 0.0s
+
+#8 [internal] load build context
+#8 transferring context: 6.00kB 0.4s done
+#8 DONE 0.4s
+
+#9 [2/5] WORKDIR /app
+#9 CACHED
+
+#10 [3/5] COPY parcel-api-node/package.json ./
+#10 CACHED
+
+#11 [4/5] COPY parcel-api-node/*.js ./
+#11 CACHED
+
+#12 [5/5] COPY parcel-data /parcel-data
+#12 CACHED
+
+#13 exporting to docker image format
+#13 exporting layers done
+#13 exporting manifest sha256:435d5bc26f5ef309b265a1c3e2282ecc6a55383b492bc75fe7c816ba7561b7c6 done
+#13 exporting config sha256:3f48e9ca370b24d4c3b6fd20762368a3dd807544631be151f4320db7278940ae done
+#13 sending tarball
+#13 sending tarball 1.0s done
+#13 DONE 1.0s
+
+#14 importing to docker
+#14 DONE 0.0s
+    build: 5s
+==> node (parcel-api-node)
+    artifact:  0.0 MiB (/app)
+    image:     149.7 MiB
+    build:     5s
+    cold-start 1/10: 0.320s
+    cold-start 2/10: 0.102s
+    cold-start 3/10: 0.128s
+    cold-start 4/10: 0.111s
+    cold-start 5/10: 0.112s
+    cold-start 6/10: 0.123s
+    cold-start 7/10: 0.120s
+    cold-start 8/10: 0.115s
+    cold-start 9/10: 0.101s
+    cold-start 10/10: 0.132s
+    idle RSS:  13.4 MiB
+    phase 1: 5s warmup vegeta workers=1...
+    warm:  655 req @ 130.69 req/s, RSS 33.7 MiB, CPU 0.82 cores
+    phase 2: 15s ramp vegeta workers=100...
+    ramp:  2191 req @ 139.61 req/s
+    phase 3: 30s steady vegeta workers=200...
+    peak:  4317 req @ 137.23 req/s, RSS 45.8 MiB, CPU 0.96 cores
+    total: 7163 req over 56s (steady = 137.23 req/s)
+
+Variant                | Build (s) | Median (s) | p95 (s)  | Idle (MiB) | Warm (MiB) | Warm CPU   | Peak (MiB) | Peak CPU   | Requests   | Load (s) | Req/s  
+-----------------------+-----------+------------+----------+------------+------------+------------+------------+------------+------------+----------+--------
+node                   | 5         | 0.117      | 0.235    | 13.4       | 33.7       | 0.82       | 45.8       | 0.96       | 7163       | 56       | 137.23 
+
+Variant                | Artifact (MiB)  | Image (MiB)    
+-----------------------+-----------------+----------------
+node                   | 0.0             | 149.7          
+wrote bench-results/2026-06-12-node-c-go/bench-graph.png
+### c ###
+==> bench dir: bench-results/2026-06-12-node-c-go
+==> setup loader on network bench-net
+==> build parcel-api-c
+#0 building with "default" instance using docker-container driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 2.24kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 DONE 0.5s
+
+#3 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#3 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e done
+#3 CACHED
+
+#4 [internal] load metadata for docker.io/library/debian:bookworm-slim
+#4 ...
+
+#5 [internal] load metadata for gcr.io/distroless/cc-debian12:latest
+#5 DONE 0.4s
+
+#4 [internal] load metadata for docker.io/library/debian:bookworm-slim
+#4 DONE 0.5s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 2B done
+#6 DONE 0.0s
+
+#7 [runtime 1/4] FROM gcr.io/distroless/cc-debian12:latest@sha256:d703b626ba455c4e6c6fbe5f36e6f427c85d51445598d564652a2f334179f96e
+#7 resolve gcr.io/distroless/cc-debian12:latest@sha256:d703b626ba455c4e6c6fbe5f36e6f427c85d51445598d564652a2f334179f96e done
+#7 DONE 0.0s
+
+#8 [builder 1/8] FROM docker.io/library/debian:bookworm-slim@sha256:96e378d7e6531ac9a15ad505478fcc2e69f371b10f5cdf87857c4b8188404716
+#8 resolve docker.io/library/debian:bookworm-slim@sha256:96e378d7e6531ac9a15ad505478fcc2e69f371b10f5cdf87857c4b8188404716 done
+#8 DONE 0.0s
+
+#9 [internal] load build context
+#9 transferring context: 43.77kB done
+#9 DONE 0.0s
+
+#10 [builder 2/8] RUN apt-get update     && apt-get install -y --no-install-recommends         build-essential cmake pkg-config git ca-certificates         libh2o-evloop-dev libssl-dev zlib1g-dev     && rm -rf /var/lib/apt/lists/*
+#10 CACHED
+
+#11 [builder 3/8] WORKDIR /build
+#11 CACHED
+
+#12 [builder 4/8] COPY parcel-api-c/CMakeLists.txt ./
+#12 CACHED
+
+#13 [builder 5/8] COPY parcel-api-c/src ./src
+#13 CACHED
+
+#14 [builder 6/8] RUN cmake -B build -S . -DCMAKE_BUILD_TYPE=Release
+#14 CACHED
+
+#15 [builder 7/8] RUN echo "build id 1781252259784356000"     && cmake --build build -j --target parcel-api     && cp build/parcel-api /parcel-api
+#15 0.044 build id 1781252259784356000
+#15 0.139 [ 16%] Building C object _deps/yyjson-build/CMakeFiles/yyjson.dir/src/yyjson.c.o
+#15 5.554 [ 33%] Linking C static library libyyjson.a
+#15 5.582 [ 33%] Built target yyjson
+#15 5.596 [ 83%] Building C object CMakeFiles/parcel-api.dir/src/service.c.o
+#15 5.596 [ 83%] Building C object CMakeFiles/parcel-api.dir/src/features.c.o
+#15 5.596 [ 83%] Building C object CMakeFiles/parcel-api.dir/src/main.c.o
+#15 5.701 [100%] Linking C executable parcel-api
+#15 6.102 [100%] Built target parcel-api
+#15 DONE 6.1s
+
+#16 [builder 8/8] RUN libdir=$(dirname $(readlink -f /lib/*-linux-gnu/libh2o-evloop.so.0.13))     && mkdir -p "/staging${libdir}"     && cp -a "${libdir}/libh2o-evloop.so."* "/staging${libdir}/"     && cp -a "${libdir}/libwslay.so."* "/staging${libdir}/"     && cp -a "${libdir}/libz.so."* "/staging${libdir}/"
+#16 DONE 0.0s
+
+#17 [runtime 2/4] COPY --from=builder /staging/ /
+#17 CACHED
+
+#18 [runtime 3/4] COPY --from=builder /parcel-api /usr/local/bin/parcel-api
+#18 CACHED
+
+#19 [runtime 4/4] COPY parcel-data /parcel-data
+#19 CACHED
+
+#20 exporting to docker image format
+#20 exporting layers done
+#20 exporting manifest sha256:d5c7747c5d6bedcfb99463f50a696975829739435ea77a81d3b1e23186fa056d done
+#20 exporting config sha256:32d2ae0190fc6d7cba905ea26b2d3e7bdcd10325c88f3d1eceb404f1a9767b06 done
+#20 sending tarball
+#20 sending tarball 0.2s done
+#20 DONE 0.2s
+
+#21 importing to docker
+#21 DONE 0.0s
+    build: 8s
+==> c (parcel-api-c)
+    artifact:  0.3 MiB (/usr/local/bin/parcel-api)
+    image:     35.5 MiB
+    build:     8s
+    cold-start 1/10: 0.109s
+    cold-start 2/10: 0.107s
+    cold-start 3/10: 0.091s
+    cold-start 4/10: 0.089s
+    cold-start 5/10: 0.100s
+    cold-start 6/10: 0.102s
+    cold-start 7/10: 0.104s
+    cold-start 8/10: 0.097s
+    cold-start 9/10: 0.094s
+    cold-start 10/10: 0.114s
+    idle RSS:  1.5 MiB
+    phase 1: 5s warmup vegeta workers=1...
+    warm:  2414 req @ 482.56 req/s, RSS 2.8 MiB, CPU 0.42 cores
+    phase 2: 15s ramp vegeta workers=100...
+    ramp:  14208 req @ 941.37 req/s
+    phase 3: 30s steady vegeta workers=200...
+    peak:  28502 req @ 943.84 req/s, RSS 2.9 MiB, CPU 0.69 cores
+    total: 45124 req over 69s (steady = 943.84 req/s)
+
+Variant                | Build (s) | Median (s) | p95 (s)  | Idle (MiB) | Warm (MiB) | Warm CPU   | Peak (MiB) | Peak CPU   | Requests   | Load (s) | Req/s  
+-----------------------+-----------+------------+----------+------------+------------+------------+------------+------------+------------+----------+--------
+c                      | 8         | 0.101      | 0.112    | 1.5        | 2.8        | 0.42       | 2.9        | 0.69       | 45124      | 69       | 943.84 
+
+Variant                | Artifact (MiB)  | Image (MiB)    
+-----------------------+-----------------+----------------
+c                      | 0.3             | 35.5           
+wrote bench-results/2026-06-12-node-c-go/bench-graph.png
+### go ###
+==> bench dir: bench-results/2026-06-12-node-c-go
+==> setup loader on network bench-net
+==> build parcel-api-go
+#0 building with "default" instance using docker-container driver
+
+#1 [internal] load build definition from Dockerfile
+#1 transferring dockerfile: 1.17kB done
+#1 DONE 0.0s
+
+#2 resolve image config for docker-image://docker.io/docker/dockerfile:1.7
+#2 DONE 1.1s
+
+#3 docker-image://docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e
+#3 resolve docker.io/docker/dockerfile:1.7@sha256:a57df69d0ea827fb7266491f2813635de6f17269be881f696fbfdf2d83dda33e done
+#3 CACHED
+
+#4 [internal] load metadata for gcr.io/distroless/static-debian12:latest
+#4 DONE 0.4s
+
+#5 [internal] load metadata for docker.io/library/golang:1.26-bookworm
+#5 DONE 0.5s
+
+#6 [internal] load .dockerignore
+#6 transferring context: 2B done
+#6 DONE 0.0s
+
+#7 [internal] load build context
+#7 DONE 0.0s
+
+#8 [runtime 1/3] FROM gcr.io/distroless/static-debian12:latest@sha256:9c346e4be81b5ca7ff31a0d89eaeade58b0f95cfd3baed1f36083ddb47ca3160
+#8 resolve gcr.io/distroless/static-debian12:latest@sha256:9c346e4be81b5ca7ff31a0d89eaeade58b0f95cfd3baed1f36083ddb47ca3160 done
+#8 DONE 0.0s
+
+#9 [builder 1/6] FROM docker.io/library/golang:1.26-bookworm@sha256:5f68ec6805843bd3981a951ffada82a26a0bd2631045c8f7dba483fa868f5ec5
+#9 resolve docker.io/library/golang:1.26-bookworm@sha256:5f68ec6805843bd3981a951ffada82a26a0bd2631045c8f7dba483fa868f5ec5 done
+#9 DONE 0.0s
+
+#7 [internal] load build context
+#7 transferring context: 29.33kB 0.4s done
+#7 DONE 0.4s
+
+#10 [builder 2/6] WORKDIR /src
+#10 CACHED
+
+#11 [builder 3/6] COPY parcel-api-go/go.mod ./
+#11 CACHED
+
+#12 [builder 4/6] RUN go mod download
+#12 CACHED
+
+#13 [builder 5/6] COPY parcel-api-go/*.go ./
+#13 CACHED
+
+#14 [builder 6/6] RUN echo "build id 1781252789991639000"     && CGO_ENABLED=0 GOOS=linux        go build -trimpath -ldflags="-s -w" -o /parcel-api .
+#14 0.065 build id 1781252789991639000
+#14 DONE 5.8s
+
+#15 [runtime 2/3] COPY --from=builder /parcel-api /usr/local/bin/parcel-api
+#15 CACHED
+
+#16 [runtime 3/3] COPY parcel-data /parcel-data
+#16 CACHED
+
+#17 importing to docker
+#17 DONE 0.0s
+
+#18 exporting to docker image format
+#18 exporting layers done
+#18 exporting manifest sha256:ba63859e6c0e01b5b8ecbb08e2215030be3d5d1e8a066b06f013c5357b6fd1a8 done
+#18 exporting config sha256:5555142bd7232da66a9b8fd81a6a2bdcbd0aa8025d3341d2188349b92f5d0f94 done
+#18 sending tarball 0.1s done
+#18 DONE 0.1s
+    build: 10s
+==> go (parcel-api-go)
+    artifact:  5.4 MiB (/usr/local/bin/parcel-api)
+    image:     9.1 MiB
+    build:     10s
+    cold-start 1/10: 0.106s
+    cold-start 2/10: 0.094s
+    cold-start 3/10: 0.087s
+    cold-start 4/10: 0.089s
+    cold-start 5/10: 0.087s
+    cold-start 6/10: 0.088s
+    cold-start 7/10: 0.097s
+    cold-start 8/10: 0.084s
+    cold-start 9/10: 0.090s
+    cold-start 10/10: 0.094s
+    idle RSS:  2.7 MiB
+    phase 1: 5s warmup vegeta workers=1...
+    warm:  596 req @ 119.06 req/s, RSS 8.7 MiB, CPU 0.79 cores
+    phase 2: 15s ramp vegeta workers=100...
+    ramp:  6070 req @ 399.82 req/s
+    phase 3: 30s steady vegeta workers=200...
+    peak:  11633 req @ 383.23 req/s, RSS 31.6 MiB, CPU 2.63 cores
+    total: 18299 req over 59s (steady = 383.23 req/s)
+
+Variant                | Build (s) | Median (s) | p95 (s)  | Idle (MiB) | Warm (MiB) | Warm CPU   | Peak (MiB) | Peak CPU   | Requests   | Load (s) | Req/s  
+-----------------------+-----------+------------+----------+------------+------------+------------+------------+------------+------------+----------+--------
+go                     | 10        | 0.089      | 0.102    | 2.7        | 8.7        | 0.79       | 31.6       | 2.63       | 18299      | 59       | 383.23 
+
+Variant                | Artifact (MiB)  | Image (MiB)    
+-----------------------+-----------------+----------------
+go                     | 5.4             | 9.1            
+wrote bench-results/2026-06-12-node-c-go/bench-graph.png
+### DONE ###

@@ -1,0 +1,189 @@
+{
+  "parcelNumber": "TESTPARCEL0001000066",
+  "consignmentNumber": "CONS0002000066",
+  "status": "collectable",
+  "userChosenName": "My package from Maxbo",
+  "direction": "sent",
+  "transport": {
+    "type": "glow",
+    "electric": false,
+    "fuelType": "electric"
+  },
+  "dimensions": {
+    "lengthInCm": 36,
+    "widthInCm": 31,
+    "heightInCm": 11
+  },
+  "weightInKg": 4.699999999999999,
+  "delivery": {
+    "type": "parcel_box_delivery",
+    "pickUpPointId": "67890",
+    "deadlineDate": "2026-06-03T10:00:00Z",
+    "extendDeadlineTo": "2026-06-06T10:00:00Z",
+    "pickUpCode": "P100066",
+    "pickUpQrCode": "qr-testparcel0001000066",
+    "shelfNumber": "A16",
+    "gateCode": "G1016",
+    "pinCode": null,
+    "qrCode": null,
+    "permission": "can_collect",
+    "bankidAuthenticated": "not_applicable",
+    "options": [
+      "notify_when_collectable",
+      "early_return",
+      "change_pickup_point"
+    ],
+    "progressPercentageBasedOnEvents": 11,
+    "deliveryTime": {
+      "date": "2026-05-16T17:00:00Z",
+      "deliveryWindow": {
+        "start": "2026-05-16T17:00:00Z",
+        "end": "2026-05-16T19:00:00Z"
+      }
+    }
+  },
+  "sender": {
+    "name": "Maxbo",
+    "iconUrl": "https://cdn.posten.no/icons/maxbo.png",
+    "phoneNumber": "+4722000016",
+    "email": "orders@maxbo.no",
+    "customerNumber": "CUST-100066",
+    "branding": {
+      "bannerImage": {
+        "url": "https://cdn.posten.no/branding/banner-6.png",
+        "text": "Banner for Maxbo"
+      },
+      "contentImage": {
+        "url": "https://cdn.posten.no/branding/content-6.png",
+        "text": "Content image"
+      },
+      "title": "Your Maxbo order is on the way",
+      "description": "Track your parcel and manage delivery preferences in the Posten app.",
+      "storeLink": {
+        "url": "https://maxbo.no/orders/1066",
+        "text": "View order in Maxbo store"
+      }
+    },
+    "customerService": {
+      "name": "Maxbo Customer Service",
+      "url": "https://maxbo.no/support"
+    }
+  },
+  "recipient": {
+    "name": "Recipient Person 67",
+    "postalCode": "0150",
+    "city": "Oslo",
+    "address": "Storgata 12",
+    "phoneNumber": "+4791000016",
+    "email": "recipient67@example.com",
+    "sharedAccessPhoneNumber": null,
+    "bankidAuthenticated": true
+  },
+  "productName": "norway_parcel_small",
+  "productGroup": "parcel_locker",
+  "events": [
+    {
+      "description": "Event 0 for parcel TESTPARCEL0001000016 - status update from terminal",
+      "date": "2026-05-14T17:00:00Z",
+      "city": "Oslo",
+      "countryCode": "NO",
+      "type": "pre_notified",
+      "cause": null,
+      "whatsNextDescription": "Your parcel will arrive within 2-3 business days",
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 1 for parcel TESTPARCEL0001000016 - status update from terminal",
+      "date": "2026-05-14T23:00:00Z",
+      "city": "Bergen",
+      "countryCode": "NO",
+      "type": "attempted_delivery",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    },
+    {
+      "description": "Event 2 for parcel TESTPARCEL0001000016 - status update from terminal",
+      "date": "2026-05-15T05:00:00Z",
+      "city": "Trondheim",
+      "countryCode": "NO",
+      "type": "ready_for_pick_up",
+      "cause": "mailbox_delivery_failed",
+      "whatsNextDescription": null,
+      "displayStatus": "hidden"
+    },
+    {
+      "description": "Event 3 for parcel TESTPARCEL0001000016 - status update from terminal",
+      "date": "2026-05-15T11:00:00Z",
+      "city": "Stavanger",
+      "countryCode": "NO",
+      "type": "delivered",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 4 for parcel TESTPARCEL0001000016 - status update from terminal",
+      "date": "2026-05-15T17:00:00Z",
+      "city": "Drammen",
+      "countryCode": "NO",
+      "type": "handed_in",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    },
+    {
+      "description": "Event 5 for parcel TESTPARCEL0001000016 - status update from terminal",
+      "date": "2026-05-15T23:00:00Z",
+      "city": "Troms\u00f8",
+      "countryCode": "NO",
+      "type": "updated_delivery_information",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "hidden"
+    },
+    {
+      "description": "Event 6 for parcel TESTPARCEL0001000016 - status update from terminal",
+      "date": "2026-05-16T05:00:00Z",
+      "city": "Kristiansand",
+      "countryCode": "NO",
+      "type": "pre_notified",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 7 for parcel TESTPARCEL0001000016 - status update from terminal",
+      "date": "2026-05-16T11:00:00Z",
+      "city": "Sandnes",
+      "countryCode": "NO",
+      "type": "attempted_delivery",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    }
+  ],
+  "features": [
+    {
+      "type": "contains_alcohol",
+      "url": "https://posten.no/features/contains_alcohol",
+      "title": "Feature contains_alcohol",
+      "description": "Detailed description for feature contains_alcohol on parcel index 16",
+      "date": null
+    },
+    {
+      "type": "personal_delivery_receipt",
+      "url": "https://posten.no/features/personal_delivery_receipt",
+      "title": "Feature personal_delivery_receipt",
+      "description": "Detailed description for feature personal_delivery_receipt on parcel index 16",
+      "date": null
+    }
+  ],
+  "expiresAt": "2026-06-17T10:00:00Z",
+  "parcelNumbersInConsignment": [
+    "TESTPARCEL0001000066"
+  ],
+  "customsTax": null,
+  "customsInformationRequirements": null,
+  "rewards": null
+}

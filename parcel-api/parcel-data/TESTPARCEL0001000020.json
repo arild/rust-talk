@@ -1,0 +1,170 @@
+{
+  "parcelNumber": "TESTPARCEL0001000020",
+  "consignmentNumber": "CONS0002000020",
+  "status": "archived_by_user",
+  "userChosenName": "My package from Komplett.no",
+  "direction": "sent",
+  "transport": {
+    "type": "postnord",
+    "electric": false,
+    "fuelType": "fossil"
+  },
+  "dimensions": {
+    "lengthInCm": 40,
+    "widthInCm": 15,
+    "heightInCm": 15
+  },
+  "weightInKg": 0.5,
+  "delivery": {
+    "type": "pib_delivery",
+    "pickUpPointId": "12345",
+    "deadlineDate": "2026-06-07T10:00:00Z",
+    "extendDeadlineTo": "2026-06-10T10:00:00Z",
+    "pickUpCode": "P100020",
+    "pickUpQrCode": "qr-testparcel0001000020",
+    "shelfNumber": "A20",
+    "gateCode": null,
+    "pinCode": null,
+    "qrCode": null,
+    "permission": "can_collect",
+    "bankidAuthenticated": "not_applicable",
+    "options": [
+      "notify_when_collectable",
+      "early_return",
+      "change_pickup_point",
+      "extend_deadline"
+    ],
+    "progressPercentageBasedOnEvents": 39,
+    "deliveryTime": {
+      "date": "2026-05-16T13:00:00Z",
+      "deliveryWindow": {
+        "start": "2026-05-16T13:00:00Z",
+        "end": "2026-05-16T15:00:00Z"
+      }
+    }
+  },
+  "sender": {
+    "name": "Komplett.no",
+    "iconUrl": "https://cdn.posten.no/icons/komplett.no.png",
+    "phoneNumber": "+4722000020",
+    "email": "orders@komplettno.no",
+    "customerNumber": "CUST-100020",
+    "branding": {
+      "bannerImage": {
+        "url": "https://cdn.posten.no/branding/banner-0.png",
+        "text": "Banner for Komplett.no"
+      },
+      "contentImage": {
+        "url": "https://cdn.posten.no/branding/content-0.png",
+        "text": "Content image"
+      },
+      "title": "Your Komplett.no order is on the way",
+      "description": "Track your parcel and manage delivery preferences in the Posten app.",
+      "storeLink": {
+        "url": "https://komplett.no.no/orders/1020",
+        "text": "View order in Komplett.no store"
+      }
+    },
+    "customerService": {
+      "name": "Komplett.no Customer Service",
+      "url": "https://komplett.no.no/support"
+    }
+  },
+  "recipient": {
+    "name": "Recipient Person 21",
+    "postalCode": "0550",
+    "city": "Drammen",
+    "address": "Karl Johans gate 1",
+    "phoneNumber": "+4791000020",
+    "email": "recipient21@example.com",
+    "sharedAccessPhoneNumber": "+4792000020",
+    "bankidAuthenticated": true
+  },
+  "productName": "business_parcel_standard",
+  "productGroup": "pickup_point",
+  "events": [
+    {
+      "description": "Event 0 for parcel TESTPARCEL0001000020 - status update from terminal",
+      "date": "2026-05-14T13:00:00Z",
+      "city": "Drammen",
+      "countryCode": "NO",
+      "type": "pre_notified",
+      "cause": null,
+      "whatsNextDescription": "Your parcel will arrive within 2-3 business days",
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 1 for parcel TESTPARCEL0001000020 - status update from terminal",
+      "date": "2026-05-14T19:00:00Z",
+      "city": "Troms\u00f8",
+      "countryCode": "NO",
+      "type": "attempted_delivery",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    },
+    {
+      "description": "Event 2 for parcel TESTPARCEL0001000020 - status update from terminal",
+      "date": "2026-05-15T01:00:00Z",
+      "city": "Kristiansand",
+      "countryCode": "NO",
+      "type": "ready_for_pick_up",
+      "cause": "mailbox_delivery_failed",
+      "whatsNextDescription": null,
+      "displayStatus": "hidden"
+    },
+    {
+      "description": "Event 3 for parcel TESTPARCEL0001000020 - status update from terminal",
+      "date": "2026-05-15T07:00:00Z",
+      "city": "Sandnes",
+      "countryCode": "NO",
+      "type": "delivered",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 4 for parcel TESTPARCEL0001000020 - status update from terminal",
+      "date": "2026-05-15T13:00:00Z",
+      "city": "Oslo",
+      "countryCode": "NO",
+      "type": "handed_in",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    },
+    {
+      "description": "Event 5 for parcel TESTPARCEL0001000020 - status update from terminal",
+      "date": "2026-05-15T19:00:00Z",
+      "city": "Bergen",
+      "countryCode": "NO",
+      "type": "updated_delivery_information",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "hidden"
+    }
+  ],
+  "features": [
+    {
+      "type": "share_pickup_access",
+      "url": "https://posten.no/features/share_pickup_access",
+      "title": "Feature share_pickup_access",
+      "description": "Detailed description for feature share_pickup_access on parcel index 20",
+      "date": null
+    },
+    {
+      "type": "early_return",
+      "url": "https://posten.no/features/early_return",
+      "title": "Feature early_return",
+      "description": "Detailed description for feature early_return on parcel index 20",
+      "date": null
+    }
+  ],
+  "expiresAt": "2026-06-21T10:00:00Z",
+  "parcelNumbersInConsignment": [
+    "TESTPARCEL0001000020"
+  ],
+  "customsTax": null,
+  "customsInformationRequirements": null,
+  "rewards": null
+}

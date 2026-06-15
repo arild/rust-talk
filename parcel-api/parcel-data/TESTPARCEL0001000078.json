@@ -1,0 +1,220 @@
+{
+  "parcelNumber": "TESTPARCEL0001000078",
+  "consignmentNumber": "CONS0002000078",
+  "status": "notified",
+  "userChosenName": "My package from Skousen",
+  "direction": "sent",
+  "transport": {
+    "type": "glow",
+    "electric": false,
+    "fuelType": "hydrogen"
+  },
+  "dimensions": {
+    "lengthInCm": 48,
+    "widthInCm": 23,
+    "heightInCm": 23
+  },
+  "weightInKg": 6.1,
+  "delivery": {
+    "type": "home_delivery",
+    "pickUpPointId": "98765",
+    "deadlineDate": "2026-06-15T10:00:00Z",
+    "extendDeadlineTo": "2026-06-18T10:00:00Z",
+    "pickUpCode": "P100078",
+    "pickUpQrCode": "qr-testparcel0001000078",
+    "shelfNumber": "A28",
+    "gateCode": null,
+    "pinCode": null,
+    "qrCode": null,
+    "permission": "can_collect",
+    "bankidAuthenticated": "not_applicable",
+    "options": [
+      "notify_when_collectable",
+      "early_return",
+      "change_pickup_point"
+    ],
+    "progressPercentageBasedOnEvents": 95,
+    "deliveryTime": {
+      "date": "2026-05-16T05:00:00Z",
+      "deliveryWindow": {
+        "start": "2026-05-16T05:00:00Z",
+        "end": "2026-05-16T07:00:00Z"
+      }
+    }
+  },
+  "sender": {
+    "name": "Skousen",
+    "iconUrl": "https://cdn.posten.no/icons/skousen.png",
+    "phoneNumber": "+4722000028",
+    "email": "orders@skousen.no",
+    "customerNumber": "CUST-100078",
+    "branding": {
+      "bannerImage": {
+        "url": "https://cdn.posten.no/branding/banner-8.png",
+        "text": "Banner for Skousen"
+      },
+      "contentImage": {
+        "url": "https://cdn.posten.no/branding/content-8.png",
+        "text": "Content image"
+      },
+      "title": "Your Skousen order is on the way",
+      "description": "Track your parcel and manage delivery preferences in the Posten app.",
+      "storeLink": {
+        "url": "https://skousen.no/orders/1078",
+        "text": "View order in Skousen store"
+      }
+    },
+    "customerService": {
+      "name": "Skousen Customer Service",
+      "url": "https://skousen.no/support"
+    }
+  },
+  "recipient": {
+    "name": "Recipient Person 79",
+    "postalCode": "0550",
+    "city": "Drammen",
+    "address": "Kirkeveien 22",
+    "phoneNumber": "+4791000028",
+    "email": "recipient79@example.com",
+    "sharedAccessPhoneNumber": null,
+    "bankidAuthenticated": true
+  },
+  "productName": "norway_parcel",
+  "productGroup": "parcel_locker",
+  "events": [
+    {
+      "description": "Event 0 for parcel TESTPARCEL0001000028 - status update from terminal",
+      "date": "2026-05-14T05:00:00Z",
+      "city": "Drammen",
+      "countryCode": "NO",
+      "type": "pre_notified",
+      "cause": null,
+      "whatsNextDescription": "Your parcel will arrive within 2-3 business days",
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 1 for parcel TESTPARCEL0001000028 - status update from terminal",
+      "date": "2026-05-14T11:00:00Z",
+      "city": "Troms\u00f8",
+      "countryCode": "NO",
+      "type": "attempted_delivery",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    },
+    {
+      "description": "Event 2 for parcel TESTPARCEL0001000028 - status update from terminal",
+      "date": "2026-05-14T17:00:00Z",
+      "city": "Kristiansand",
+      "countryCode": "NO",
+      "type": "ready_for_pick_up",
+      "cause": "mailbox_delivery_failed",
+      "whatsNextDescription": null,
+      "displayStatus": "hidden"
+    },
+    {
+      "description": "Event 3 for parcel TESTPARCEL0001000028 - status update from terminal",
+      "date": "2026-05-14T23:00:00Z",
+      "city": "Sandnes",
+      "countryCode": "NO",
+      "type": "delivered",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 4 for parcel TESTPARCEL0001000028 - status update from terminal",
+      "date": "2026-05-15T05:00:00Z",
+      "city": "Oslo",
+      "countryCode": "NO",
+      "type": "handed_in",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    },
+    {
+      "description": "Event 5 for parcel TESTPARCEL0001000028 - status update from terminal",
+      "date": "2026-05-15T11:00:00Z",
+      "city": "Bergen",
+      "countryCode": "NO",
+      "type": "updated_delivery_information",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "hidden"
+    },
+    {
+      "description": "Event 6 for parcel TESTPARCEL0001000028 - status update from terminal",
+      "date": "2026-05-15T17:00:00Z",
+      "city": "Trondheim",
+      "countryCode": "NO",
+      "type": "pre_notified",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 7 for parcel TESTPARCEL0001000028 - status update from terminal",
+      "date": "2026-05-15T23:00:00Z",
+      "city": "Stavanger",
+      "countryCode": "NO",
+      "type": "attempted_delivery",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    }
+  ],
+  "features": [
+    {
+      "type": "early_return",
+      "url": "https://posten.no/features/early_return",
+      "title": "Feature early_return",
+      "description": "Detailed description for feature early_return on parcel index 28",
+      "date": null
+    },
+    {
+      "type": "registered_letter",
+      "url": "https://posten.no/features/registered_letter",
+      "title": "Feature registered_letter",
+      "description": "Detailed description for feature registered_letter on parcel index 28",
+      "date": null
+    }
+  ],
+  "expiresAt": "2026-06-29T10:00:00Z",
+  "parcelNumbersInConsignment": [
+    "TESTPARCEL0001000078"
+  ],
+  "customsTax": {
+    "type": "flexible_payment_customs_tax",
+    "status": "open",
+    "totalAmountInOre": 15300,
+    "parcelContent": [
+      {
+        "description": "T-shirt",
+        "currencyCode": "USD",
+        "amountInSubunit": 1999
+      },
+      {
+        "description": "Headphones",
+        "currencyCode": "USD",
+        "amountInSubunit": 9999
+      }
+    ],
+    "customsPriceList": [
+      {
+        "description": "VAT",
+        "amountInOre": 7500
+      },
+      {
+        "description": "Processing fee",
+        "amountInOre": 5000
+      }
+    ],
+    "dueDate": "2026-06-15T10:00:00Z"
+  },
+  "customsInformationRequirements": {
+    "documentsRequired": true,
+    "informationProvided": true,
+    "identificationRequired": false
+  },
+  "rewards": null
+}

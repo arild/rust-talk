@@ -1,0 +1,170 @@
+{
+  "parcelNumber": "TESTPARCEL0001000032",
+  "consignmentNumber": "CONS0002000032",
+  "status": "return_collectable",
+  "userChosenName": "My package from Elkj\u00f8p",
+  "direction": "sent",
+  "transport": {
+    "type": "postnord",
+    "electric": false,
+    "fuelType": "fossil_free"
+  },
+  "dimensions": {
+    "lengthInCm": 22,
+    "widthInCm": 27,
+    "heightInCm": 12
+  },
+  "weightInKg": 1.9,
+  "delivery": {
+    "type": "parcel_robot_delivery",
+    "pickUpPointId": "54321",
+    "deadlineDate": "2026-06-19T10:00:00Z",
+    "extendDeadlineTo": "2026-06-22T10:00:00Z",
+    "pickUpCode": "P100032",
+    "pickUpQrCode": "qr-testparcel0001000032",
+    "shelfNumber": "A32",
+    "gateCode": null,
+    "pinCode": "1266",
+    "qrCode": "rqr-testparcel0001000032",
+    "permission": "can_collect",
+    "bankidAuthenticated": "not_applicable",
+    "options": [
+      "notify_when_collectable",
+      "early_return",
+      "change_pickup_point",
+      "extend_deadline"
+    ],
+    "progressPercentageBasedOnEvents": 22,
+    "deliveryTime": {
+      "date": "2026-05-16T01:00:00Z",
+      "deliveryWindow": {
+        "start": "2026-05-16T01:00:00Z",
+        "end": "2026-05-16T03:00:00Z"
+      }
+    }
+  },
+  "sender": {
+    "name": "Elkj\u00f8p",
+    "iconUrl": "https://cdn.posten.no/icons/elkj\u00f8p.png",
+    "phoneNumber": "+4722000032",
+    "email": "orders@elkj\u00f8p.no",
+    "customerNumber": "CUST-100032",
+    "branding": {
+      "bannerImage": {
+        "url": "https://cdn.posten.no/branding/banner-2.png",
+        "text": "Banner for Elkj\u00f8p"
+      },
+      "contentImage": {
+        "url": "https://cdn.posten.no/branding/content-2.png",
+        "text": "Content image"
+      },
+      "title": "Your Elkj\u00f8p order is on the way",
+      "description": "Track your parcel and manage delivery preferences in the Posten app.",
+      "storeLink": {
+        "url": "https://elkj\u00f8p.no/orders/1032",
+        "text": "View order in Elkj\u00f8p store"
+      }
+    },
+    "customerService": {
+      "name": "Elkj\u00f8p Customer Service",
+      "url": "https://elkj\u00f8p.no/support"
+    }
+  },
+  "recipient": {
+    "name": "Recipient Person 33",
+    "postalCode": "0150",
+    "city": "Oslo",
+    "address": "Bygd\u00f8y all\u00e9 5",
+    "phoneNumber": "+4791000032",
+    "email": "recipient33@example.com",
+    "sharedAccessPhoneNumber": null,
+    "bankidAuthenticated": true
+  },
+  "productName": "parcel_private_to_parcel_locker",
+  "productGroup": "pickup_point",
+  "events": [
+    {
+      "description": "Event 0 for parcel TESTPARCEL0001000032 - status update from terminal",
+      "date": "2026-05-14T01:00:00Z",
+      "city": "Oslo",
+      "countryCode": "NO",
+      "type": "pre_notified",
+      "cause": null,
+      "whatsNextDescription": "Your parcel will arrive within 2-3 business days",
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 1 for parcel TESTPARCEL0001000032 - status update from terminal",
+      "date": "2026-05-14T07:00:00Z",
+      "city": "Bergen",
+      "countryCode": "NO",
+      "type": "attempted_delivery",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    },
+    {
+      "description": "Event 2 for parcel TESTPARCEL0001000032 - status update from terminal",
+      "date": "2026-05-14T13:00:00Z",
+      "city": "Trondheim",
+      "countryCode": "NO",
+      "type": "ready_for_pick_up",
+      "cause": "mailbox_delivery_failed",
+      "whatsNextDescription": null,
+      "displayStatus": "hidden"
+    },
+    {
+      "description": "Event 3 for parcel TESTPARCEL0001000032 - status update from terminal",
+      "date": "2026-05-14T19:00:00Z",
+      "city": "Stavanger",
+      "countryCode": "NO",
+      "type": "delivered",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 4 for parcel TESTPARCEL0001000032 - status update from terminal",
+      "date": "2026-05-15T01:00:00Z",
+      "city": "Drammen",
+      "countryCode": "NO",
+      "type": "handed_in",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    },
+    {
+      "description": "Event 5 for parcel TESTPARCEL0001000032 - status update from terminal",
+      "date": "2026-05-15T07:00:00Z",
+      "city": "Troms\u00f8",
+      "countryCode": "NO",
+      "type": "updated_delivery_information",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "hidden"
+    }
+  ],
+  "features": [
+    {
+      "type": "ecolabel_swan",
+      "url": "https://posten.no/features/ecolabel_swan",
+      "title": "Feature ecolabel_swan",
+      "description": "Detailed description for feature ecolabel_swan on parcel index 32",
+      "date": null
+    },
+    {
+      "type": "user_must_show_id",
+      "url": "https://posten.no/features/user_must_show_id",
+      "title": "Feature user_must_show_id",
+      "description": "Detailed description for feature user_must_show_id on parcel index 32",
+      "date": null
+    }
+  ],
+  "expiresAt": "2026-07-03T10:00:00Z",
+  "parcelNumbersInConsignment": [
+    "TESTPARCEL0001000032"
+  ],
+  "customsTax": null,
+  "customsInformationRequirements": null,
+  "rewards": null
+}

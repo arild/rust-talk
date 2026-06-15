@@ -1,0 +1,166 @@
+{
+  "parcelNumber": "TESTPARCEL0001000013",
+  "consignmentNumber": "CONS0002000013",
+  "status": "archived_by_user",
+  "userChosenName": null,
+  "direction": "receive",
+  "transport": {
+    "type": "glow",
+    "electric": false,
+    "fuelType": "hydrogen"
+  },
+  "dimensions": {
+    "lengthInCm": 33,
+    "widthInCm": 28,
+    "heightInCm": 23
+  },
+  "weightInKg": 2.5999999999999996,
+  "delivery": {
+    "type": "home_delivery",
+    "pickUpPointId": "98765",
+    "deadlineDate": "2026-05-31T10:00:00Z",
+    "extendDeadlineTo": "2026-06-03T10:00:00Z",
+    "pickUpCode": "P100013",
+    "pickUpQrCode": "qr-testparcel0001000013",
+    "shelfNumber": "A13",
+    "gateCode": null,
+    "pinCode": null,
+    "qrCode": null,
+    "permission": "can_open",
+    "bankidAuthenticated": "pending",
+    "options": [
+      "notify_when_collectable",
+      "early_return",
+      "change_pickup_point"
+    ],
+    "progressPercentageBasedOnEvents": 91,
+    "deliveryTime": {
+      "date": "2026-05-16T20:00:00Z",
+      "deliveryWindow": {
+        "start": "2026-05-16T20:00:00Z",
+        "end": "2026-05-16T22:00:00Z"
+      }
+    }
+  },
+  "sender": {
+    "name": "XXL",
+    "iconUrl": "https://cdn.posten.no/icons/xxl.png",
+    "phoneNumber": "+4722000013",
+    "email": "orders@xxl.no",
+    "customerNumber": "CUST-100013",
+    "branding": {
+      "bannerImage": {
+        "url": "https://cdn.posten.no/branding/banner-3.png",
+        "text": "Banner for XXL"
+      },
+      "contentImage": {
+        "url": "https://cdn.posten.no/branding/content-3.png",
+        "text": "Content image"
+      },
+      "title": "Your XXL order is on the way",
+      "description": "Track your parcel and manage delivery preferences in the Posten app.",
+      "storeLink": {
+        "url": "https://xxl.no/orders/1013",
+        "text": "View order in XXL store"
+      }
+    },
+    "customerService": {
+      "name": "XXL Customer Service",
+      "url": "https://xxl.no/support"
+    }
+  },
+  "recipient": {
+    "name": "Recipient Person 14",
+    "postalCode": "5003",
+    "city": "Troms\u00f8",
+    "address": "Kirkeveien 22",
+    "phoneNumber": "+4791000013",
+    "email": "recipient14@example.com",
+    "sharedAccessPhoneNumber": null,
+    "bankidAuthenticated": false
+  },
+  "productName": "unknown",
+  "productGroup": "mailbox",
+  "events": [
+    {
+      "description": "Event 0 for parcel TESTPARCEL0001000013 - status update from terminal",
+      "date": "2026-05-14T20:00:00Z",
+      "city": "Troms\u00f8",
+      "countryCode": "NO",
+      "type": "pre_notified",
+      "cause": null,
+      "whatsNextDescription": "Your parcel will arrive within 2-3 business days",
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 1 for parcel TESTPARCEL0001000013 - status update from terminal",
+      "date": "2026-05-15T02:00:00Z",
+      "city": "Kristiansand",
+      "countryCode": "NO",
+      "type": "attempted_delivery",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    },
+    {
+      "description": "Event 2 for parcel TESTPARCEL0001000013 - status update from terminal",
+      "date": "2026-05-15T08:00:00Z",
+      "city": "Sandnes",
+      "countryCode": "NO",
+      "type": "ready_for_pick_up",
+      "cause": "mailbox_delivery_failed",
+      "whatsNextDescription": null,
+      "displayStatus": "hidden"
+    },
+    {
+      "description": "Event 3 for parcel TESTPARCEL0001000013 - status update from terminal",
+      "date": "2026-05-15T14:00:00Z",
+      "city": "Oslo",
+      "countryCode": "NO",
+      "type": "delivered",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 4 for parcel TESTPARCEL0001000013 - status update from terminal",
+      "date": "2026-05-15T20:00:00Z",
+      "city": "Bergen",
+      "countryCode": "NO",
+      "type": "handed_in",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    }
+  ],
+  "features": [
+    {
+      "type": "early_return",
+      "url": "https://posten.no/features/early_return",
+      "title": "Feature early_return",
+      "description": "Detailed description for feature early_return on parcel index 13",
+      "date": null
+    },
+    {
+      "type": "registered_letter",
+      "url": "https://posten.no/features/registered_letter",
+      "title": "Feature registered_letter",
+      "description": "Detailed description for feature registered_letter on parcel index 13",
+      "date": null
+    },
+    {
+      "type": "share_pickup_access",
+      "url": "https://posten.no/features/share_pickup_access",
+      "title": "Feature share_pickup_access",
+      "description": "Detailed description for feature share_pickup_access on parcel index 13",
+      "date": null
+    }
+  ],
+  "expiresAt": "2026-06-14T10:00:00Z",
+  "parcelNumbersInConsignment": [
+    "TESTPARCEL0001000013"
+  ],
+  "customsTax": null,
+  "customsInformationRequirements": null,
+  "rewards": null
+}

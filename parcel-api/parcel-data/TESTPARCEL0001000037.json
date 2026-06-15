@@ -1,0 +1,166 @@
+{
+  "parcelNumber": "TESTPARCEL0001000037",
+  "consignmentNumber": "CONS0002000037",
+  "status": "collectable",
+  "userChosenName": null,
+  "direction": "receive",
+  "transport": {
+    "type": "glow",
+    "electric": false,
+    "fuelType": "fossil_free"
+  },
+  "dimensions": {
+    "lengthInCm": 27,
+    "widthInCm": 32,
+    "heightInCm": 17
+  },
+  "weightInKg": 5.3999999999999995,
+  "delivery": {
+    "type": "parcel_robot_delivery",
+    "pickUpPointId": "54321",
+    "deadlineDate": "2026-06-24T10:00:00Z",
+    "extendDeadlineTo": "2026-06-27T10:00:00Z",
+    "pickUpCode": "P100037",
+    "pickUpQrCode": "qr-testparcel0001000037",
+    "shelfNumber": "A37",
+    "gateCode": null,
+    "pinCode": "1271",
+    "qrCode": "rqr-testparcel0001000037",
+    "permission": "can_open",
+    "bankidAuthenticated": "pending",
+    "options": [
+      "notify_when_collectable",
+      "early_return",
+      "change_pickup_point"
+    ],
+    "progressPercentageBasedOnEvents": 57,
+    "deliveryTime": {
+      "date": "2026-05-15T20:00:00Z",
+      "deliveryWindow": {
+        "start": "2026-05-15T20:00:00Z",
+        "end": "2026-05-15T22:00:00Z"
+      }
+    }
+  },
+  "sender": {
+    "name": "Jernia",
+    "iconUrl": "https://cdn.posten.no/icons/jernia.png",
+    "phoneNumber": "+4722000037",
+    "email": "orders@jernia.no",
+    "customerNumber": "CUST-100037",
+    "branding": {
+      "bannerImage": {
+        "url": "https://cdn.posten.no/branding/banner-7.png",
+        "text": "Banner for Jernia"
+      },
+      "contentImage": {
+        "url": "https://cdn.posten.no/branding/content-7.png",
+        "text": "Content image"
+      },
+      "title": "Your Jernia order is on the way",
+      "description": "Track your parcel and manage delivery preferences in the Posten app.",
+      "storeLink": {
+        "url": "https://jernia.no/orders/1037",
+        "text": "View order in Jernia store"
+      }
+    },
+    "customerService": {
+      "name": "Jernia Customer Service",
+      "url": "https://jernia.no/support"
+    }
+  },
+  "recipient": {
+    "name": "Recipient Person 38",
+    "postalCode": "5003",
+    "city": "Troms\u00f8",
+    "address": "Bygd\u00f8y all\u00e9 5",
+    "phoneNumber": "+4791000037",
+    "email": "recipient38@example.com",
+    "sharedAccessPhoneNumber": null,
+    "bankidAuthenticated": false
+  },
+  "productName": "pickup_parcel",
+  "productGroup": "mailbox",
+  "events": [
+    {
+      "description": "Event 0 for parcel TESTPARCEL0001000037 - status update from terminal",
+      "date": "2026-05-13T20:00:00Z",
+      "city": "Troms\u00f8",
+      "countryCode": "NO",
+      "type": "pre_notified",
+      "cause": null,
+      "whatsNextDescription": "Your parcel will arrive within 2-3 business days",
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 1 for parcel TESTPARCEL0001000037 - status update from terminal",
+      "date": "2026-05-14T02:00:00Z",
+      "city": "Kristiansand",
+      "countryCode": "NO",
+      "type": "attempted_delivery",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    },
+    {
+      "description": "Event 2 for parcel TESTPARCEL0001000037 - status update from terminal",
+      "date": "2026-05-14T08:00:00Z",
+      "city": "Sandnes",
+      "countryCode": "NO",
+      "type": "ready_for_pick_up",
+      "cause": "mailbox_delivery_failed",
+      "whatsNextDescription": null,
+      "displayStatus": "hidden"
+    },
+    {
+      "description": "Event 3 for parcel TESTPARCEL0001000037 - status update from terminal",
+      "date": "2026-05-14T14:00:00Z",
+      "city": "Oslo",
+      "countryCode": "NO",
+      "type": "delivered",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 4 for parcel TESTPARCEL0001000037 - status update from terminal",
+      "date": "2026-05-14T20:00:00Z",
+      "city": "Bergen",
+      "countryCode": "NO",
+      "type": "handed_in",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    }
+  ],
+  "features": [
+    {
+      "type": "contains_alcohol",
+      "url": "https://posten.no/features/contains_alcohol",
+      "title": "Feature contains_alcohol",
+      "description": "Detailed description for feature contains_alcohol on parcel index 37",
+      "date": null
+    },
+    {
+      "type": "user_must_show_id",
+      "url": "https://posten.no/features/user_must_show_id",
+      "title": "Feature user_must_show_id",
+      "description": "Detailed description for feature user_must_show_id on parcel index 37",
+      "date": null
+    },
+    {
+      "type": "personal_delivery_receipt",
+      "url": "https://posten.no/features/personal_delivery_receipt",
+      "title": "Feature personal_delivery_receipt",
+      "description": "Detailed description for feature personal_delivery_receipt on parcel index 37",
+      "date": null
+    }
+  ],
+  "expiresAt": "2026-07-08T10:00:00Z",
+  "parcelNumbersInConsignment": [
+    "TESTPARCEL0001000037"
+  ],
+  "customsTax": null,
+  "customsInformationRequirements": null,
+  "rewards": null
+}

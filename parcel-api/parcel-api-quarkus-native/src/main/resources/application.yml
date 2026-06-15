@@ -1,0 +1,32 @@
+quarkus:
+  application:
+    name: parcel-api-quarkus
+  http:
+    port: 8080
+    root-path: /parcel-api
+    non-application-root-path: q
+  smallrye-openapi:
+    path: openapi
+  swagger-ui:
+    always-include: true
+    path: swagger-ui
+  jackson:
+    serialization-inclusion: non_null
+  log:
+    console:
+      json:
+        enable: true
+
+# Override via PARCEL_DATA_DIR env var. Default points at the shared folder one
+# level up (works for `./gradlew quarkusDev`); Docker overrides to /parcel-data.
+parcel:
+  data:
+    dir: ../parcel-data
+
+"%dev":
+  quarkus:
+    log:
+      console:
+        json:
+          enable: false
+      level: INFO

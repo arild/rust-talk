@@ -1,0 +1,203 @@
+{
+  "parcelNumber": "TESTPARCEL0001000096",
+  "consignmentNumber": "CONS0002000096",
+  "status": "return_collectable",
+  "userChosenName": null,
+  "direction": "sent",
+  "transport": {
+    "type": "glow",
+    "electric": false,
+    "fuelType": "electric"
+  },
+  "dimensions": {
+    "lengthInCm": 36,
+    "widthInCm": 21,
+    "heightInCm": 11
+  },
+  "weightInKg": 4.699999999999999,
+  "delivery": {
+    "type": "parcel_box_delivery",
+    "pickUpPointId": "67890",
+    "deadlineDate": "2026-07-03T10:00:00Z",
+    "extendDeadlineTo": "2026-07-06T10:00:00Z",
+    "pickUpCode": "P100096",
+    "pickUpQrCode": "qr-testparcel0001000096",
+    "shelfNumber": "A46",
+    "gateCode": "G1046",
+    "pinCode": null,
+    "qrCode": null,
+    "permission": "can_collect_when_recipient_is_bankid_authenticated",
+    "bankidAuthenticated": "success",
+    "options": [
+      "notify_when_collectable",
+      "early_return",
+      "change_pickup_point"
+    ],
+    "progressPercentageBasedOnEvents": 19,
+    "deliveryTime": {
+      "date": "2026-05-15T11:00:00Z",
+      "deliveryWindow": {
+        "start": "2026-05-15T11:00:00Z",
+        "end": "2026-05-15T13:00:00Z"
+      }
+    }
+  },
+  "sender": {
+    "name": "Maxbo",
+    "iconUrl": "https://cdn.posten.no/icons/maxbo.png",
+    "phoneNumber": "+4722000046",
+    "email": "orders@maxbo.no",
+    "customerNumber": "CUST-100096",
+    "branding": {
+      "bannerImage": {
+        "url": "https://cdn.posten.no/branding/banner-6.png",
+        "text": "Banner for Maxbo"
+      },
+      "contentImage": {
+        "url": "https://cdn.posten.no/branding/content-6.png",
+        "text": "Content image"
+      },
+      "title": "Your Maxbo order is on the way",
+      "description": "Track your parcel and manage delivery preferences in the Posten app.",
+      "storeLink": {
+        "url": "https://maxbo.no/orders/1096",
+        "text": "View order in Maxbo store"
+      }
+    },
+    "customerService": {
+      "name": "Maxbo Customer Service",
+      "url": "https://maxbo.no/support"
+    }
+  },
+  "recipient": {
+    "name": "Recipient Person 97",
+    "postalCode": "7011",
+    "city": "Kristiansand",
+    "address": "Storgata 12",
+    "phoneNumber": "+4791000046",
+    "email": "recipient97@example.com",
+    "sharedAccessPhoneNumber": null,
+    "bankidAuthenticated": false
+  },
+  "productName": "parcel_private_to_parcel_locker",
+  "productGroup": "parcel_locker",
+  "events": [
+    {
+      "description": "Event 0 for parcel TESTPARCEL0001000046 - status update from terminal",
+      "date": "2026-05-13T11:00:00Z",
+      "city": "Kristiansand",
+      "countryCode": "NO",
+      "type": "pre_notified",
+      "cause": null,
+      "whatsNextDescription": "Your parcel will arrive within 2-3 business days",
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 1 for parcel TESTPARCEL0001000046 - status update from terminal",
+      "date": "2026-05-13T17:00:00Z",
+      "city": "Sandnes",
+      "countryCode": "NO",
+      "type": "attempted_delivery",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    },
+    {
+      "description": "Event 2 for parcel TESTPARCEL0001000046 - status update from terminal",
+      "date": "2026-05-13T23:00:00Z",
+      "city": "Oslo",
+      "countryCode": "NO",
+      "type": "ready_for_pick_up",
+      "cause": "mailbox_delivery_failed",
+      "whatsNextDescription": null,
+      "displayStatus": "hidden"
+    },
+    {
+      "description": "Event 3 for parcel TESTPARCEL0001000046 - status update from terminal",
+      "date": "2026-05-14T05:00:00Z",
+      "city": "Bergen",
+      "countryCode": "NO",
+      "type": "delivered",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 4 for parcel TESTPARCEL0001000046 - status update from terminal",
+      "date": "2026-05-14T11:00:00Z",
+      "city": "Trondheim",
+      "countryCode": "NO",
+      "type": "handed_in",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    },
+    {
+      "description": "Event 5 for parcel TESTPARCEL0001000046 - status update from terminal",
+      "date": "2026-05-14T17:00:00Z",
+      "city": "Stavanger",
+      "countryCode": "NO",
+      "type": "updated_delivery_information",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "hidden"
+    },
+    {
+      "description": "Event 6 for parcel TESTPARCEL0001000046 - status update from terminal",
+      "date": "2026-05-14T23:00:00Z",
+      "city": "Drammen",
+      "countryCode": "NO",
+      "type": "pre_notified",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "significant"
+    },
+    {
+      "description": "Event 7 for parcel TESTPARCEL0001000046 - status update from terminal",
+      "date": "2026-05-15T05:00:00Z",
+      "city": "Troms\u00f8",
+      "countryCode": "NO",
+      "type": "attempted_delivery",
+      "cause": null,
+      "whatsNextDescription": null,
+      "displayStatus": "insignificant"
+    }
+  ],
+  "features": [
+    {
+      "type": "early_return",
+      "url": "https://posten.no/features/early_return",
+      "title": "Feature early_return",
+      "description": "Detailed description for feature early_return on parcel index 46",
+      "date": null
+    },
+    {
+      "type": "ecolabel_swan",
+      "url": "https://posten.no/features/ecolabel_swan",
+      "title": "Feature ecolabel_swan",
+      "description": "Detailed description for feature ecolabel_swan on parcel index 46",
+      "date": null
+    },
+    {
+      "type": "user_must_show_id",
+      "url": "https://posten.no/features/user_must_show_id",
+      "title": "Feature user_must_show_id",
+      "description": "Detailed description for feature user_must_show_id on parcel index 46",
+      "date": null
+    },
+    {
+      "type": "share_pickup_access",
+      "url": "https://posten.no/features/share_pickup_access",
+      "title": "Feature share_pickup_access",
+      "description": "Detailed description for feature share_pickup_access on parcel index 46",
+      "date": null
+    }
+  ],
+  "expiresAt": "2026-07-17T10:00:00Z",
+  "parcelNumbersInConsignment": [
+    "TESTPARCEL0001000096"
+  ],
+  "customsTax": null,
+  "customsInformationRequirements": null,
+  "rewards": null
+}

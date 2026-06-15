@@ -1,0 +1,8 @@
+warm_end_ms=7220
+ramp_end_ms=25039
+steady_end_ms=60718
+warm_rps=119.75
+ramp_rps=372.31
+steady_rps=381.02
+cpu_limit=3
+max_parallel=200
