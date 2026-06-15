@@ -23,8 +23,6 @@ All under context path `/parcel-api`.
 
 - `POST /v1/parcel` — accepts `{"lastUpdated": …?, "exclude": …?}` (fields ignored),
   returns 50 stub parcels in `ParcelDataResponse` shape.
-- `GET /check` — text/plain banner + memory + version.
-- `GET /check/status` — `👋 parcel-api is on air`.
 - `GET /v3/api-docs` — OpenAPI JSON.
 - `GET /swagger-ui/` — Swagger UI.
 

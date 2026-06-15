@@ -3,7 +3,6 @@
  *
  * Single-threaded h2o event loop, yyjson for parse + serialize. Endpoints
  * mirror the rust / spring-boot / quarkus variants verbatim:
- *   GET  /parcel-api/check/status
  *   POST /parcel-api/v1/parcel
  */
 
@@ -25,17 +24,12 @@
 #define DEFAULT_PORT 8080
 #define DEFAULT_DATA_DIR "/parcel-data"
 #define CONTEXT_PATH "/parcel-api"
-#define CHECK_PATH "/parcel-api/check"
-#define CHECK_STATUS_PATH "/parcel-api/check/status"
 #define PARCEL_PATH_PREFIX "/parcel-api/v1/parcel"
 
 static h2o_globalconf_t config;
 static h2o_context_t ctx;
 static h2o_accept_ctx_t accept_ctx;
 static service_t *svc;
-
-static const char *status_body =
-    "\xf0\x9f\x91\x8b parcel-api is on air"; // UTF-8 wave hand + text
 
 static void send_json(h2o_req_t *req, int status, const char *reason,
                       char *json, size_t json_len) {
@@ -87,55 +81,6 @@ static void send_problem(h2o_req_t *req, int status, const char *reason,
 }
 
 /* ---------- Route handlers ---------- */
-
-static int send_plain(h2o_req_t *req, const char *body_text, size_t body_len) {
-    h2o_iovec_t body = h2o_strdup(&req->pool, body_text, body_len);
-    req->res.status = 200;
-    req->res.reason = "OK";
-    req->res.content_length = body.len;
-    h2o_add_header(&req->pool, &req->res.headers, H2O_TOKEN_CONTENT_TYPE, NULL,
-                   H2O_STRLIT("text/plain; charset=UTF-8"));
-    static h2o_generator_t generator = {NULL, NULL};
-    h2o_start_response(req, &generator);
-    h2o_send(req, &body, 1, H2O_SEND_STATE_FINAL);
-    return 0;
-}
-
-static int on_check_status(h2o_handler_t *self, h2o_req_t *req) {
-    (void)self;
-    if (!h2o_memis(req->method.base, req->method.len, H2O_STRLIT("GET")))
-        return -1;
-    return send_plain(req, status_body, strlen(status_body));
-}
-
-// Mirrors the Rust /check endpoint: banner + cheap memory readout. Reads
-// /proc/self/statm directly so it stays a few syscalls — the goal is for
-// container probes to be virtually free.
-static int on_check(h2o_handler_t *self, h2o_req_t *req) {
-    (void)self;
-    if (!h2o_memis(req->method.base, req->method.len, H2O_STRLIT("GET")))
-        return -1;
-
-    char mem_line[128];
-    snprintf(mem_line, sizeof(mem_line), "memory stats unavailable on this platform");
-    FILE *fp = fopen("/proc/self/statm", "r");
-    if (fp) {
-        long total_pages = 0, rss_pages = 0;
-        if (fscanf(fp, "%ld %ld", &total_pages, &rss_pages) == 2) {
-            long page_kib = sysconf(_SC_PAGESIZE) / 1024;
-            long total_mib = total_pages * page_kib / 1024;
-            long rss_mib = rss_pages * page_kib / 1024;
-            snprintf(mem_line, sizeof(mem_line),
-                     "total: %ldmb, resident: %ldmb", total_mib, rss_mib);
-        }
-        fclose(fp);
-    }
-    char body[512];
-    int n = snprintf(body, sizeof(body),
-                     "parcel-api\n\nMemory:\n%s\n\nVersion:\ndev\n", mem_line);
-    if (n < 0) n = 0;
-    return send_plain(req, body, (size_t)n);
-}
 
 // Dispatches POST /parcel-api/v1/parcel.
 static int on_parcel(h2o_handler_t *self, h2o_req_t *req) {
@@ -216,10 +161,6 @@ int main(int argc, char **argv) {
     h2o_hostconf_t *hostconf = h2o_config_register_host(
         &config, h2o_iovec_init(H2O_STRLIT("default")), 65535);
 
-    // Order matters: h2o picks the first matching prefix. Register the more
-    // specific path first.
-    register_path(hostconf, CHECK_STATUS_PATH, on_check_status);
-    register_path(hostconf, CHECK_PATH, on_check);
     register_path(hostconf, PARCEL_PATH_PREFIX, on_parcel);
 
     h2o_context_init(&ctx, h2o_evloop_create(), &config);

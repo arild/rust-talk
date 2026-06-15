@@ -1,6 +1,6 @@
 use axum::{
     middleware::from_fn,
-    routing::{get, post},
+    routing::post,
     Router,
 };
 use std::sync::Arc;
@@ -10,7 +10,7 @@ use utoipa::OpenApi;
 use utoipa_swagger_ui::SwaggerUi;
 
 use crate::config::AppConfig;
-use crate::controller::{health, parcel};
+use crate::controller::parcel;
 use crate::service::StubParcelService;
 
 pub struct AppState {
@@ -68,8 +68,6 @@ pub fn build_app(state: Arc<AppState>) -> Router {
 
     let inner: Router<Arc<AppState>> = Router::new()
         .route("/v1/parcel", post(parcel::list_parcels))
-        .route("/check", get(health::health))
-        .route("/check/status", get(health::status))
         .layer(from_fn(request_id_middleware))
         .layer(request_log);
 

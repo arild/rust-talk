@@ -132,8 +132,6 @@ for the Serial-vs-G1 trade-off, toolchain-tag fallbacks, and the keep-in-sync no
 ### Smoke-test
 
 ```bash
-curl http://localhost:8080/parcel-api/check/status
-
 # List all parcels (~200 KB response, no auth needed — UserProfile is stubbed)
 curl -X POST http://localhost:8080/parcel-api/v1/parcel \
   -H "Content-Type: application/json" \

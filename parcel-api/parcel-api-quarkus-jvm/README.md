@@ -9,8 +9,6 @@ Behaviour mirrors the Spring Boot port byte-for-byte (modulo the `providedLastUp
 ## What it does
 
 - `POST /parcel-api/v1/parcel` — accepts `ParcelRequest` body (`{}` works); returns all 100 parcels.
-- `GET /parcel-api/check/status` — text liveness ping.
-- `GET /parcel-api/check` — text health (memory + version banner).
 - `GET /parcel-api/q/openapi` — OpenAPI document.
 - `GET /parcel-api/q/swagger-ui` — Swagger UI.
 
@@ -58,7 +56,6 @@ For the native build, see [`../parcel-api-quarkus-native`](../parcel-api-quarkus
 ## Sanity checks
 
 ```bash
-curl http://localhost:8080/parcel-api/check/status
 curl -X POST http://localhost:8080/parcel-api/v1/parcel \
      -H 'Content-Type: application/json' -d '{}'
 curl http://localhost:8080/parcel-api/q/openapi

@@ -30,7 +30,7 @@ ITERS="${2:-10}"
 CONTAINER=parcel-api-srv
 HOST_PORT=8080
 BASE_URL="http://localhost:${HOST_PORT}/parcel-api"
-READY_URL="${BASE_URL}/check/status"
+READY_URL="${BASE_URL}/v1/parcel"
 # Load against the real list-parcels endpoint. Each variant's stub is in-process
 # so all three do equivalent work: parse the empty request, serialize ~50 parcels
 # (~200 KB JSON). That stresses the runtime's JSON path, which is the comparison
@@ -323,7 +323,7 @@ mem_mib() {
       }'
 }
 
-# One cold-start measurement. Times "docker run" → "/check/status returns 200".
+# One cold-start measurement. Times "docker run" → first "POST /v1/parcel returns 200".
 # Single python3 invocation so the interpreter startup isn't repeated mid-measurement.
 # $2 is a JAVA_TOOL_OPTIONS string injected via -e (empty for Rust).
 cold_start_once() {
@@ -343,9 +343,13 @@ if java_opts:
 cmd.append(image)
 start = time.time()
 subprocess.check_call(cmd, stdout=subprocess.DEVNULL)
+# Readiness = the real workload endpoint serving 200 (no separate health endpoint).
+ready_req = urllib.request.Request(
+    ready_url, data=b"{}",
+    headers={"Content-Type": "application/json"}, method="POST")
 while True:
     try:
-        urllib.request.urlopen(ready_url, timeout=1).read()
+        urllib.request.urlopen(ready_req, timeout=1).read()
         break
     except (urllib.error.URLError, ConnectionError, OSError):
         time.sleep(0.01)

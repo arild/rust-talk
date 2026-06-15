@@ -36,14 +36,6 @@ async function startWorker() {
     reply.type('application/json').send(svc.listParcels());
   });
 
-  app.get('/parcel-api/check/status', (request, reply) => {
-    reply.type('text/plain; charset=UTF-8').send('parcel-api is on air');
-  });
-
-  app.get('/parcel-api/check', (request, reply) => {
-    reply.type('text/plain; charset=UTF-8').send(memorySummary());
-  });
-
   app.setNotFoundHandler((request, reply) => {
     reply.code(404).type('application/json').send('{"message":"Not Found"}');
   });
@@ -54,14 +46,4 @@ async function startWorker() {
   for (const sig of ['SIGINT', 'SIGTERM']) {
     process.on(sig, () => app.close().then(() => process.exit(0)));
   }
-}
-
-function memorySummary() {
-  const m = process.memoryUsage();
-  const mb = (b) => Math.floor(b / (1024 * 1024));
-  return (
-    'parcel-api\n\nMemory:\n' +
-    `total: ${mb(m.heapTotal)}mb, free: ${mb(m.heapTotal - m.heapUsed)}mb, active: ${mb(m.heapUsed)}mb` +
-    '\n\nVersion:\ndev\n'
-  );
 }
