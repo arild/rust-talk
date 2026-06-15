@@ -32,7 +32,7 @@ async function startWorker() {
 
   // listParcels() returns a pre-serialized JSON string; send it verbatim so the
   // custom wire format is preserved (Fastify does not re-encode string payloads).
-  app.post('/parcel-api/v1/parcel', (request, reply) => {
+  app.get('/parcel-api/parcel', (request, reply) => {
     reply.type('application/json').send(svc.listParcels());
   });
 

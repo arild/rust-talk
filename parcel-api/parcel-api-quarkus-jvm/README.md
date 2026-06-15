@@ -8,7 +8,7 @@ Behaviour mirrors the Spring Boot port byte-for-byte (modulo the `providedLastUp
 
 ## What it does
 
-- `POST /parcel-api/v1/parcel` — accepts `ParcelRequest` body (`{}` works); returns all 100 parcels.
+- `GET /parcel-api/parcel` — returns all 100 parcels.
 - `GET /parcel-api/q/openapi` — OpenAPI document.
 - `GET /parcel-api/q/swagger-ui` — Swagger UI.
 
@@ -56,7 +56,6 @@ For the native build, see [`../parcel-api-quarkus-native`](../parcel-api-quarkus
 ## Sanity checks
 
 ```bash
-curl -X POST http://localhost:8080/parcel-api/v1/parcel \
-     -H 'Content-Type: application/json' -d '{}'
+curl http://localhost:8080/parcel-api/parcel
 curl http://localhost:8080/parcel-api/q/openapi
 ```

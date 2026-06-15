@@ -8,13 +8,12 @@ use common::{body_to_string, TestApp};
 use tower::util::ServiceExt;
 
 #[tokio::test]
-async fn post_parcel_returns_200_with_100_parcels() {
+async fn get_parcels_returns_200_with_100_parcels() {
     let test_app = TestApp::new();
     let req = Request::builder()
-        .method("POST")
-        .uri("/parcel-api/v1/parcel")
-        .header("content-type", "application/json")
-        .body(Body::from("{}"))
+        .method("GET")
+        .uri("/parcel-api/parcel")
+        .body(Body::empty())
         .unwrap();
     let response = test_app.router().oneshot(req).await.unwrap();
     assert_eq!(response.status(), StatusCode::OK);
@@ -25,19 +24,4 @@ async fn post_parcel_returns_200_with_100_parcels() {
     assert!(parcels
         .iter()
         .any(|parcel| parcel["parcelNumber"] == "TESTPARCEL0001000000"));
-}
-
-#[tokio::test]
-async fn post_parcel_accepts_populated_request_body() {
-    let test_app = TestApp::new();
-    let req = Request::builder()
-        .method("POST")
-        .uri("/parcel-api/v1/parcel")
-        .header("content-type", "application/json")
-        .body(Body::from(
-            r#"{"lastUpdated":"2026-05-15T10:00:00Z","exclude":["TESTPARCEL0001000000"]}"#,
-        ))
-        .unwrap();
-    let response = test_app.router().oneshot(req).await.unwrap();
-    assert_eq!(response.status(), StatusCode::OK);
 }

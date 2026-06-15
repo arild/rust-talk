@@ -21,7 +21,7 @@ port it shuffles the array per request, so the raw byte order differs run to run
 
 | Method | Path | Response |
 |---|---|---|
-| `POST` | `/parcel-api/v1/parcel` | Bare JSON array of 100 parcels (~396 KB). Request body is ignored. |
+| `GET` | `/parcel-api/parcel` | Bare JSON array of 100 parcels (~396 KB). |
 
 ## Byte parity
 

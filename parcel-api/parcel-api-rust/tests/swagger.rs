@@ -34,5 +34,5 @@ async fn openapi_json_is_reachable() {
     let body = body_to_string(response.into_body()).await;
     let value: serde_json::Value = serde_json::from_str(&body).expect("valid openapi json");
     assert_eq!(value["info"]["title"], "Parcel API");
-    assert!(value["paths"]["/v1/parcel"].is_object());
+    assert!(value["paths"]["/parcel"].is_object());
 }

@@ -1,6 +1,6 @@
 use axum::{
     middleware::from_fn,
-    routing::post,
+    routing::get,
     Router,
 };
 use std::sync::Arc;
@@ -67,7 +67,7 @@ pub fn build_app(state: Arc<AppState>) -> Router {
         .on_response(DefaultOnResponse::new().level(Level::INFO));
 
     let inner: Router<Arc<AppState>> = Router::new()
-        .route("/v1/parcel", post(parcel::list_parcels))
+        .route("/parcel", get(parcel::list_parcels))
         .layer(from_fn(request_id_middleware))
         .layer(request_log);
 

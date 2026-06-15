@@ -1,6 +1,6 @@
 # Parcel API — many ports, one benchmark
 
-Perf comparison of the same service across several runtimes — Spring Boot, Quarkus (JVM + native), Rust, C, Go, and Node — on a heavy endpoint: `POST /v1/parcel` returns ~50 rich parcel objects (~200 KB JSON per call), which stresses the runtime's JSON path.
+Perf comparison of the same service across several runtimes — Spring Boot, Quarkus (JVM + native), Rust, C, Go, and Node — on a heavy endpoint: `GET /parcel` returns ~50 rich parcel objects (~200 KB JSON per call), which stresses the runtime's JSON path.
 
 Source-of-truth is `../other/posten-parcel-api/`. The ports here are stripped-down replicas: no DB, no Kafka, no real downstream HTTP, no metrics, no auth. A fixed `UserProfile` is injected by a request filter; one in-process stub loads parcel data **from a shared JSON folder at startup** and serves it. Parcel-number validation and the Swagger UI are kept faithful.
 
@@ -8,7 +8,7 @@ Source-of-truth is `../other/posten-parcel-api/`. The ports here are stripped-do
 
 100 JSON files, one per parcel (`TESTPARCEL0001000000.json` … `TESTPARCEL0001000099.json`). Both implementations read every `*.json` file from this folder on startup and **keep the contents as raw strings (or bytes) in memory**. On every request, the strings are re-deserialised into `ParcelResponse` objects and then the framework re-serialises them for the response. That puts the JSON parse cost on the request path — closer to what a real service does when it decodes data from a downstream — and it's where the JVM's GC pressure under load shows up clearly.
 
-`POST /v1/parcel` returns the whole set (~400 KB JSON, 100 parcels). The folder is the single source of truth — change a file, both implementations see it on next boot.
+`GET /parcel` returns the whole set (~400 KB JSON, 100 parcels). The folder is the single source of truth — change a file, both implementations see it on next boot.
 
 Implementations resolve the directory from:
 
@@ -133,9 +133,7 @@ for the Serial-vs-G1 trade-off, toolchain-tag fallbacks, and the keep-in-sync no
 
 ```bash
 # List all parcels (~200 KB response, no auth needed — UserProfile is stubbed)
-curl -X POST http://localhost:8080/parcel-api/v1/parcel \
-  -H "Content-Type: application/json" \
-  -d '{}'
+curl http://localhost:8080/parcel-api/parcel
 ```
 
 ### Benchmark
@@ -169,7 +167,7 @@ Measures cold-start time (median + p95) and container RSS at three points, plus 
 
 Each phase tallies requests via a counter file (single-byte appends are atomic on POSIX). The final table reports total requests across the three phases, total load duration, and average req/s.
 
-The load endpoint is the real `POST /v1/parcel` (the stub is in-process, so the call doesn't depend on anything external — and the ~400 KB response actually exercises the JSON encoder, which is the point).
+The load endpoint is the real `GET /parcel` (the stub is in-process, so the call doesn't depend on anything external — and the ~400 KB response actually exercises the JSON encoder, which is the point).
 
 Bash is fine for the orchestration since we're measuring *memory*, not latency percentiles. If you want robust p99 / throughput numbers, point [`oha`](https://github.com/hatoo/oha) or [`hey`](https://github.com/rakyll/hey) at the same endpoint instead.
 
@@ -185,7 +183,7 @@ Bash is fine for the orchestration since we're measuring *memory*, not latency p
 
 ## What's kept from the source
 
-- `POST /v1/parcel` from `ParcelController`, with the same request/response shapes at the top level.
+- `GET /parcel` from `ParcelController`, with the same request/response shapes at the top level.
 - Springdoc-driven Swagger UI on the JVM ports.
 
 ## What's stubbed / dropped

@@ -31,7 +31,7 @@ func main() {
 	log.Printf("loaded %d parcels", svc.count())
 
 	mux := http.NewServeMux()
-	mux.HandleFunc("POST /parcel-api/v1/parcel", listParcelsHandler(svc))
+	mux.HandleFunc("GET /parcel-api/parcel", listParcelsHandler(svc))
 
 	srv := &http.Server{
 		Addr:    ":" + defaultPort,

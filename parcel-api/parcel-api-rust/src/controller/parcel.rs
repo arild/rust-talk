@@ -5,8 +5,8 @@ use crate::app::AppState;
 use crate::controller::response::ParcelResponse;
 
 #[utoipa::path(
-    post,
-    path = "/v1/parcel",
+    get,
+    path = "/parcel",
     responses(
         (status = 200, description = "All stub parcels", body = [ParcelResponse]),
     ),

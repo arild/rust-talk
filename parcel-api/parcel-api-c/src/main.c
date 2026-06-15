@@ -3,7 +3,7 @@
  *
  * Single-threaded h2o event loop, yyjson for parse + serialize. Endpoints
  * mirror the rust / spring-boot / quarkus variants verbatim:
- *   POST /parcel-api/v1/parcel
+ *   GET /parcel-api/parcel
  */
 
 #include <arpa/inet.h>
@@ -24,7 +24,7 @@
 #define DEFAULT_PORT 8080
 #define DEFAULT_DATA_DIR "/parcel-data"
 #define CONTEXT_PATH "/parcel-api"
-#define PARCEL_PATH_PREFIX "/parcel-api/v1/parcel"
+#define PARCEL_PATH_PREFIX "/parcel-api/parcel"
 
 static h2o_globalconf_t config;
 static h2o_context_t ctx;
@@ -82,7 +82,7 @@ static void send_problem(h2o_req_t *req, int status, const char *reason,
 
 /* ---------- Route handlers ---------- */
 
-// Dispatches POST /parcel-api/v1/parcel.
+// Dispatches GET /parcel-api/parcel.
 static int on_parcel(h2o_handler_t *self, h2o_req_t *req) {
     (void)self;
     // Slice off the query string for path matching.
@@ -90,10 +90,10 @@ static int on_parcel(h2o_handler_t *self, h2o_req_t *req) {
     const char *qmark = memchr(req->path.base, '?', path_len);
     if (qmark) path_len = (size_t)(qmark - req->path.base);
 
-    bool is_post = h2o_memis(req->method.base, req->method.len, H2O_STRLIT("POST"));
+    bool is_get  = h2o_memis(req->method.base, req->method.len, H2O_STRLIT("GET"));
     bool exact   = h2o_memis(req->path.base, path_len, H2O_STRLIT(PARCEL_PATH_PREFIX));
 
-    if (is_post && exact) {
+    if (is_get && exact) {
         size_t len = 0;
         char *json = service_list_parcels(svc, &len);
         if (!json) {

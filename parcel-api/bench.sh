@@ -30,13 +30,13 @@ ITERS="${2:-10}"
 CONTAINER=parcel-api-srv
 HOST_PORT=8080
 BASE_URL="http://localhost:${HOST_PORT}/parcel-api"
-READY_URL="${BASE_URL}/v1/parcel"
+READY_URL="${BASE_URL}/parcel"
 # Load against the real list-parcels endpoint. Each variant's stub is in-process
 # so all three do equivalent work: parse the empty request, serialize ~50 parcels
 # (~200 KB JSON). That stresses the runtime's JSON path, which is the comparison
-# we want — unlike branded-tracking, the POST path has no external dependency.
+# we want — unlike branded-tracking, the GET path has no external dependency.
 # Load runs from a vegeta container on the same bridge; uses container DNS.
-LOAD_URL="http://${CONTAINER}:8080/parcel-api/v1/parcel"
+LOAD_URL="http://${CONTAINER}:8080/parcel-api/parcel"
 NETWORK="bench-net"
 VEGETA_LOADER="vegeta-loader"
 VEGETA_IMAGE="${VEGETA_IMAGE:-peterevans/vegeta:latest}"
@@ -99,10 +99,8 @@ setup_loader() {
   docker run -d --name "$VEGETA_LOADER" --network "$NETWORK" \
     -v "$bench_dir_abs:/bench-results" \
     --entrypoint sleep "$VEGETA_IMAGE" 86400 >/dev/null
-  docker exec "$VEGETA_LOADER" sh -c "printf '%s' '{}' > /tmp/body.json && cat > /tmp/targets.txt <<EOF
-POST $LOAD_URL
-Content-Type: application/json
-@/tmp/body.json
+  docker exec "$VEGETA_LOADER" sh -c "cat > /tmp/targets.txt <<EOF
+GET $LOAD_URL
 EOF"
 }
 
@@ -323,7 +321,7 @@ mem_mib() {
       }'
 }
 
-# One cold-start measurement. Times "docker run" → first "POST /v1/parcel returns 200".
+# One cold-start measurement. Times "docker run" → first "GET /parcel returns 200".
 # Single python3 invocation so the interpreter startup isn't repeated mid-measurement.
 # $2 is a JAVA_TOOL_OPTIONS string injected via -e (empty for Rust).
 cold_start_once() {
@@ -344,12 +342,9 @@ cmd.append(image)
 start = time.time()
 subprocess.check_call(cmd, stdout=subprocess.DEVNULL)
 # Readiness = the real workload endpoint serving 200 (no separate health endpoint).
-ready_req = urllib.request.Request(
-    ready_url, data=b"{}",
-    headers={"Content-Type": "application/json"}, method="POST")
 while True:
     try:
-        urllib.request.urlopen(ready_req, timeout=1).read()
+        urllib.request.urlopen(ready_url, timeout=1).read()
         break
     except (urllib.error.URLError, ConnectionError, OSError):
         time.sleep(0.01)

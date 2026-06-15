@@ -16,7 +16,7 @@ Behaviour mirrors the Spring Boot port byte-for-byte (modulo the `providedLastUp
 
 ## What it does
 
-- `POST /parcel-api/v1/parcel` — accepts `ParcelRequest` body (`{}` works); returns all 100 parcels.
+- `GET /parcel-api/parcel` — returns all 100 parcels.
 - `GET /parcel-api/q/openapi` — OpenAPI document.
 - `GET /parcel-api/q/swagger-ui` — Swagger UI.
 
@@ -84,7 +84,7 @@ Both native builds work. Measured at `--cpus 3`, `--memory 1g` (see
 | native (Serial) | ~0.09 s | 6.8 MiB | 73 MiB | 115 |
 | native-g1 (Oracle) | ~0.10 s | 6.3 MiB | 276 MiB | 287 |
 
-`NativeReflectionConfig.kt` proved sufficient — `POST /v1/parcel` serves at 100%
+`NativeReflectionConfig.kt` proved sufficient — `GET /parcel` serves at 100%
 in native. Gotchas hit and fixed along the way are recorded in
 [`../../apps-ports.md`](../../apps-ports.md#port-4--parcel-api-quarkus-native-graalvm-aot)
 (use `quarkusBuild` not `build`; UBI9 runtime base for glibc; Docker ≥ 6 GiB for
@@ -114,7 +114,6 @@ The project is a normal Quarkus app, so you can still run it on the JVM locally
 ## Sanity checks
 
 ```bash
-curl -X POST http://localhost:8080/parcel-api/v1/parcel \
-     -H 'Content-Type: application/json' -d '{}'
+curl http://localhost:8080/parcel-api/parcel
 curl http://localhost:8080/parcel-api/q/openapi
 ```

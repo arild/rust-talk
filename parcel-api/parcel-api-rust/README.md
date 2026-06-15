@@ -21,7 +21,7 @@ memory usage can be compared against the JVM service. Stubbed data; no auth.
 
 All under context path `/parcel-api`.
 
-- `POST /v1/parcel` — accepts `{"lastUpdated": …?, "exclude": …?}` (fields ignored),
+- `GET /parcel` — request body, if any, is ignored;
   returns 50 stub parcels in `ParcelDataResponse` shape.
 - `GET /v3/api-docs` — OpenAPI JSON.
 - `GET /swagger-ui/` — Swagger UI.
