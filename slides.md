@@ -357,7 +357,6 @@ The point to land: compile once, run the raw instructions, nothing underneath at
     - Profile-guided optimization of hot paths
     - Speculative inlining + devirtualization, deopt when wrong
     - Tuned to the exact CPU, fast once warm
-    - The only practical speed for dynamic languages (JS, Python)
 
 ???
 
@@ -420,7 +419,7 @@ Reference diagrams / docs:
 
 - Workload modelled after **posten-parcel-api**.
 - Each request re-parses and re-serializes **100 parcels (~396 KB JSON)**.
-- Plus **synthetic per-request computation** on each parcel (derived features).
+- Plus **synthetic per-request computation** on each parcel.
 - Each variant in its own container, capped at **3 CPUs and 1 GiB RAM**.
 - **vegeta** at max load. Measuring cold start, memory, CPU, throughput.
 
