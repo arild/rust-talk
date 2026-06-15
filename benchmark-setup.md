@@ -64,7 +64,7 @@ percentage of *that* — making memory numbers incomparable across machines. We
 therefore pin **1 GiB**, mirroring a realistic Kubernetes pod limit.
 
 **Consequence to explain on a slide:** the JVM GCs and GraalVM native both
-default their **max heap to ~25 % of the container memory limit** — i.e. ~256 MiB
+default their **max heap to ~25 % of the container memory limit** — i.e. ~268 MB
 at a 1 GiB limit. That is why peak-memory numbers cluster the way they do, and
 why an *unconstrained* container makes a GC'd runtime look like a memory hog
 (it isn't — it just expands into whatever RAM it's allowed). Rust has no GC, so
@@ -106,7 +106,7 @@ a native binary logs "started in 0.013 s" but the measured cold start is ~90 ms)
 A background sampler polls the **Docker Engine stats API** over its unix socket
 (`/containers/<id>/stats`) at **1 Hz** and writes a CSV row per second of:
 
-- **RSS (MiB)** = container memory `usage − inactive_file` (resident working set,
+- **RSS (MB)** = container memory `usage − inactive_file` (resident working set,
   excluding reclaimable page cache).
 - **CPU (cores)** = Δ`cpu_usage.total_usage` (ns) ÷ Δ wall-clock (ns) between
   samples — i.e. average cores consumed in that 1 s window (so `2.5` means 2.5 of
@@ -130,13 +130,13 @@ Three size figures per variant, all **uncompressed on-disk** (`docker image insp
 --format '{{.Size}}'` for the image; summed file bytes for the rest):
 
 - **Image** — the full container image total: language runtime + OS base + artifact +
-  `parcel-data` (0.56 MiB / 584,824 B, identical in every image). This is the whole
+  `parcel-data` (0.58 MB / 584,824 B, identical in every image). This is the whole
   thing that lands in the pod, Alpine/distroless base included.
 - **Artifact** — the deployable: jar / `quarkus-app` dir / native or compiled binary /
   app JS.
 - **Runtime** — the **language runtime / VM** the image ships as a separate component,
   measured directly from its directory in the image: the JRE (`/opt/java/openjdk`,
-  186.9 MiB) for the JVM ports, the Node.js runtime (`/nodejs`, 115.1 MiB) for Node.
+  196.0 MB) for the JVM ports, the Node.js runtime (`/nodejs`, 120.7 MB) for Node.
   Go, Rust, C, and quarkus-native compile the runtime **into the binary** (so it's
   already counted in `Artifact`) — there's no separate runtime to measure, shown as
   "—". The remaining Image bytes not in Artifact/Runtime/`parcel-data` are the OS base
@@ -146,7 +146,7 @@ Three size figures per variant, all **uncompressed on-disk** (`docker image insp
 
 `Cold start (median / p95)` · `Idle RSS` · `Warm RSS` · `Peak RSS` ·
 `Warm CPU` · `Peak CPU` · total `Requests` · steady `Req/s` ·
-`Artifact (MiB)` · `Runtime (MiB)` · `Image (MiB)`.
+`Artifact (MB)` · `Runtime (MB)` · `Image (MB)`.
 
 ## Caveats worth stating to the audience
 
@@ -183,42 +183,42 @@ run-to-run variance.
 
 | Variant | Build | Cold start (med / p95) | Idle RSS | Warm RSS | Peak RSS | Warm CPU | Peak CPU | Steady req/s | Artifact | Runtime | Image |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| spring-boot-g1 | 8 s | 1.90 / 2.00 s | 172 MiB | 214 MiB | 446 MiB | 1.32 | 2.51 | 318 | 31.4 MiB | 186.9 MiB | 247 MiB |
-| quarkus-jvm-g1 | 6 s | 0.67 / 0.76 s | 79 MiB | 190 MiB | 382 MiB | 1.50 | 2.57 | 350 | 27.3 MiB | 186.9 MiB | 243 MiB |
-| quarkus-native-g1 | 297 s | 0.10 / 0.11 s | 6.2 MiB | 60 MiB | 279 MiB | 1.11 | 2.64 | 282 | 87.0 MiB | — | 114 MiB |
-| node | 2 s | 0.30 / 0.35 s | 93.1 MiB | 94.1 MiB | 168.5 MiB | 0.81 | 2.25 | 304 | 7.0 MiB | 115.1 MiB | 158 MiB |
-| go | 10 s | 0.09 / 0.10 s | 2.7 MiB | 8.7 MiB | 31.6 MiB | 0.79 | 2.63 | 383 | 5.4 MiB | — | 9.1 MiB |
-| rust | 119 s | 0.10 / 0.11 s | 2.0 MiB | 6.9 MiB | 12.2 MiB | 0.60 | 1.64 | 860 | 13.8 MiB | — | 48 MiB |
-| c | 8 s | 0.10 / 0.11 s | 1.5 MiB | 2.8 MiB | 2.9 MiB | 0.42 | 0.69 | 944 | 0.3 MiB | — | 35.5 MiB |
+| spring-boot-g1 | 8 s | 1.90 / 2.00 s | 180 MB | 224 MB | 468 MB | 1.32 | 2.51 | 318 | 32.9 MB | 196.0 MB | 259 MB |
+| quarkus-jvm-g1 | 6 s | 0.67 / 0.76 s | 83 MB | 199 MB | 401 MB | 1.50 | 2.57 | 350 | 28.6 MB | 196.0 MB | 255 MB |
+| quarkus-native-g1 | 297 s | 0.10 / 0.11 s | 6.5 MB | 63 MB | 293 MB | 1.11 | 2.64 | 282 | 91.2 MB | — | 120 MB |
+| node | 2 s | 0.30 / 0.35 s | 97.6 MB | 98.7 MB | 176.7 MB | 0.81 | 2.25 | 304 | 7.3 MB | 120.7 MB | 166 MB |
+| go | 10 s | 0.09 / 0.10 s | 2.8 MB | 9.1 MB | 33.1 MB | 0.79 | 2.63 | 383 | 5.7 MB | — | 9.5 MB |
+| rust | 119 s | 0.10 / 0.11 s | 2.1 MB | 7.2 MB | 12.8 MB | 0.60 | 1.64 | 860 | 14.5 MB | — | 50 MB |
+| c | 8 s | 0.10 / 0.11 s | 1.6 MB | 2.9 MB | 3.0 MB | 0.42 | 0.69 | 944 | 0.3 MB | — | 37.2 MB |
 
 **Where the runtime lives.** The `Runtime` column is the language runtime / VM the
 image ships as a *separate* component. Only Node and the JVM have one: the JVM ports
-ship a **186.9 MiB JRE** and Node a **115.1 MiB Node.js runtime** alongside a tiny app.
+ship a **196.0 MB JRE** and Node a **120.7 MB Node.js runtime** alongside a tiny app.
 Go, Rust, C, and quarkus-native compile the runtime **into the binary** (the `Artifact`
 column) — Go and Rust statically, C as native code over libc, quarkus-native baking the
-GraalVM substrate VM into its 87 MiB binary — so there's no separate runtime ("—"). The
-rest of each image is the OS base: Alpine (~28 MiB) under the JVM ports, distroless
-Debian under Node/Go/Rust/C, UBI micro (~26 MiB) under native. So: JVM/Node = big shipped
+GraalVM substrate VM into its 91 MB binary — so there's no separate runtime ("—"). The
+rest of each image is the OS base: Alpine (~29 MB) under the JVM ports, distroless
+Debian under Node/Go/Rust/C, UBI micro (~27 MB) under native. So: JVM/Node = big shipped
 runtime + small app; Go/Rust/C/native = runtime inside the binary, no separate VM.
 
 **Static linking would shrink the image (not a floor).** The `Image` figures are the
 *default dynamic-linking* deployment: C and Rust link against the distro's glibc +
-OpenSSL, so those shared libs ship in the base (the ~34 MiB `distroless/cc` — glibc
+OpenSSL, so those shared libs ship in the base (the ~36 MB `distroless/cc` — glibc
 ~13, OpenSSL ~6, libstdc++ ~2.5). Both could instead compile **fully static** — musl
 libc plus static OpenSSL/zlib (Rust via the `x86_64-unknown-linux-musl` target) — and
-run on `scratch` or `distroless/static` (~2 MiB). That moves the bytes from the base
-*into* the binary, but musl is far leaner than glibc (~1 vs ~13 MiB) and dead-code
+run on `scratch` or `distroless/static` (~2 MB). That moves the bytes from the base
+*into* the binary, but musl is far leaner than glibc (~1 vs ~13 MB) and dead-code
 elimination pulls in only the OpenSSL symbols actually used, so the total typically
-lands in **single-digit MiB**, in Go's range or below. Caveats: it's a deliberate
+lands in **single-digit MB**, in Go's range or below. Caveats: it's a deliberate
 optimization, not the baseline shown here; musl's allocator can shift throughput
 (relevant since C's number is allocation-bound), so it isn't free; and static *glibc*
 is not the route (its NSS/DNS and iconv paths still `dlopen` at runtime) — musl is.
 
 Headlines: **startup** — native/Go/Rust/C ~0.1 s, Node 0.30 s (forks 3 workers),
-Quarkus-JVM 0.67 s, Spring Boot 1.9 s. **Idle memory** — C 1.5 MiB ≈ Rust 2 ≈ Go 2.7
-≪ native 6 ≪ Quarkus-JVM 79 ≪ Node 93 ≪ Spring Boot 172. **Peak memory under load**
-— C 2.9 MiB ≪ Rust 12 ≪ Go 32 ≪ Node 169 ≪ native 279 ≪ Quarkus-JVM 382 ≪ Spring
-Boot 446. **Throughput** — C 944 ≈ Rust 860, both ≫ Go 383 ≫ Node 304 and the
+Quarkus-JVM 0.67 s, Spring Boot 1.9 s. **Idle memory** — C 1.6 MB ≈ Rust 2.1 ≈ Go 2.8
+≪ native 6.5 ≪ Quarkus-JVM 83 ≪ Node 98 ≪ Spring Boot 180. **Peak memory under load**
+— C 3.0 MB ≪ Rust 13 ≪ Go 33 ≪ Node 177 ≪ native 293 ≪ Quarkus-JVM 401 ≪ Spring
+Boot 468. **Throughput** — C 944 ≈ Rust 860, both ≫ Go 383 ≫ Node 304 and the
 JVM/native band (282–350).
 
 **C caveat:** C led on throughput while peaking at only **0.69 of 3 cores** — the
@@ -231,8 +231,8 @@ reference points.
 (3 under `--cpus 3`). That reaches **2.25 of 3 cores and 304 req/s** — 2.2× the
 single-process `node:http` version it replaced (137 req/s at 0.96 cores; preserved in
 `bench-results/2026-06-12-node-c-go/`), now genuinely multi-core like Go and the JVMs.
-The cost is memory: three full Node processes push idle RSS to 93 MiB and peak to
-169 MiB (vs 13 / 46 single-process), and cold start to 0.30 s (each worker boots
+The cost is memory: three full Node processes push idle RSS to 98 MB and peak to
+177 MB (vs 14 / 48 single-process), and cold start to 0.30 s (each worker boots
 Fastify and loads its own parcel copy). RSS scales ~linearly with `WEB_CONCURRENCY`.
 
 Build column is the **containerized image rebuild** (deps/toolchain cached, app

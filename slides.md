@@ -374,13 +374,13 @@ way the wind is blowing. Dynamic languages (V8, Python, Ruby YJIT) keep JIT ever
 <img src="img/quarkus-modes.svg" width="90%" style="display:block;margin:0.2em auto 0.6em" />
 
 - **Build time:** wiring, config, reflection resolved up front.
-- **JVM mode:** bytecode on a pre-booted JVM (JIT + GC).
+- **JVM mode:** bytecode on a normal JVM (JIT + GC), fast start from the build-time wiring.
 - **Native mode:** GraalVM **AOT** to a native binary, no JVM. Instant startup and lean, but slower builds and no JIT.
 
 ???
 
 The question from the room is usually "so is there a runtime?":
-- JVM mode: yes, the full JVM (JIT + GC), just pre-booted with less startup work.
+- JVM mode: yes, the full JVM with JIT and GC, cold-starting as a normal process. Nothing is kept warm or snapshotted, the framework wiring was just done at build time, so there is far less startup work than Spring Boot does on every boot.
 - Native mode: no JVM; GraalVM produced a closed-world native binary (reflection needs build-time hints).
 The ~30 MB vs ~200 MB figures are industry ballparks; replace with our own bench numbers once they land.
 Reference diagrams / docs:
@@ -420,17 +420,19 @@ Reference diagrams / docs:
 
 - Workload modelled after **posten-parcel-api**.
 - Each request re-parses and re-serializes **100 parcels (~396 KB JSON)**.
+- Plus **synthetic per-request computation** on each parcel (derived features).
 - Each variant in its own container, capped at **3 CPUs and 1 GiB RAM**.
-- **vegeta** at max load. Measuring cold start, RSS, CPU, throughput.
+- **vegeta** at max load. Measuring cold start, memory, CPU, throughput.
 
 ???
 
 posten-parcel-api is the real Posten service the workload is modelled on. Re-parsing 396 KB on
-every request is a deliberate stressor, it puts JSON and allocation cost on the hot path. A
+every request is a deliberate stressor, it puts JSON and allocation cost on the hot path, plus a
+synthetic per-parcel computation of derived features so it is not pure serialization. A
 caching service would narrow the gap.
 
 The 1 GiB limit mirrors a Kubernetes pod and keeps memory comparable. The JVM GCs and GraalVM
-native default their max heap to about 25% of container memory, roughly 256 MiB here. Rust has
+native default their max heap to about 25% of container memory, roughly 268 MB here. Rust has
 no GC, so its memory is workload-bound.
 
 The native bar is Oracle GraalVM with G1, native at its tuned best. The free Mandrel default
@@ -456,7 +458,7 @@ uses Serial GC and does about 3x fewer requests per second, so it is omitted for
     <tr>
       <th rowspan="2"></th>
       <th colspan="2">Cold start (s)</th>
-      <th colspan="3">RSS (MiB)</th>
+      <th colspan="3">Memory (MB)</th>
       <th colspan="2">CPU (cores)</th>
       <th rowspan="2">Req/s</th>
     </tr>
@@ -467,18 +469,18 @@ uses Serial GC and does about 3x fewer requests per second, so it is omitted for
     </tr>
   </thead>
   <tbody>
-    <tr><th>Spring Boot</th><td>1.90</td><td>2.00</td><td>172</td><td>214</td><td>446</td><td>1.32</td><td>2.51</td><td>318</td></tr>
-    <tr><th>Quarkus (JVM)</th><td>0.67</td><td>0.76</td><td>79</td><td>190</td><td>382</td><td>1.50</td><td>2.57</td><td>350</td></tr>
-    <tr><th>Quarkus native</th><td>0.10</td><td>0.11</td><td>6.2</td><td>60</td><td>279</td><td>1.11</td><td>2.64</td><td>282</td></tr>
-    <tr class="rust"><th>Rust</th><td>0.10</td><td>0.11</td><td>2.0</td><td>6.9</td><td>12.2</td><td>0.60</td><td>1.64</td><td>860</td></tr>
+    <tr><th>Spring Boot</th><td>1.90</td><td>2.00</td><td>180</td><td>224</td><td>468</td><td>1.32</td><td>2.51</td><td>318</td></tr>
+    <tr><th>Quarkus (JVM)</th><td>0.67</td><td>0.76</td><td>83</td><td>199</td><td>401</td><td>1.50</td><td>2.57</td><td>350</td></tr>
+    <tr><th>Quarkus native</th><td>0.10</td><td>0.11</td><td>6.5</td><td>63</td><td>293</td><td>1.11</td><td>2.64</td><td>282</td></tr>
+    <tr class="rust"><th>Rust</th><td>0.10</td><td>0.11</td><td>2.1</td><td>7.2</td><td>12.8</td><td>0.60</td><td>1.64</td><td>860</td></tr>
   </tbody>
 </table>
 
 ???
 
 Rust does roughly 2.5x the throughput on a fraction of the memory. The native bar starts as fast
-as Rust but its G1 heap still sizes to about 25% of the 1 GiB limit, so peak RSS stays near
-279 MiB. Quarkus on the JVM is the easy win over Spring Boot, faster start and leaner.
+as Rust but its G1 heap still sizes to about 25% of the 1 GiB limit, so peak memory stays near
+293 MB. Quarkus on the JVM is the easy win over Spring Boot, faster start and leaner.
 
 Provenance: the 2026-06-11 clean run. Post-cleanup, every port returns the same bare JSON array,
 byte-identical payloads, and all metrics land within run-to-run variance of the earlier June run.
@@ -490,13 +492,13 @@ Build times on the next slide are carried over from that earlier run.
 
 <table class="res">
   <thead>
-    <tr><th></th><th>Build (s)</th><th>Artifact (MiB)</th><th>Runtime (MiB)</th><th>Image (MiB)</th></tr>
+    <tr><th></th><th>Build (s)</th><th>Artifact (MB)</th><th>Runtime (MB)</th><th>Image (MB)</th></tr>
   </thead>
   <tbody>
-    <tr><th>Spring Boot</th><td>8</td><td>31.4</td><td>186.9</td><td>247</td></tr>
-    <tr><th>Quarkus (JVM)</th><td>6</td><td>27.3</td><td>186.9</td><td>243</td></tr>
-    <tr><th>Quarkus native</th><td>297</td><td>87.0</td><td>none</td><td>114</td></tr>
-    <tr class="rust"><th>Rust</th><td>119</td><td>13.8</td><td>none</td><td>48</td></tr>
+    <tr><th>Spring Boot</th><td>8</td><td>32.9</td><td>196.0</td><td>259</td></tr>
+    <tr><th>Quarkus (JVM)</th><td>6</td><td>28.6</td><td>196.0</td><td>255</td></tr>
+    <tr><th>Quarkus native</th><td>297</td><td>91.2</td><td>none</td><td>120</td></tr>
+    <tr class="rust"><th>Rust</th><td>119</td><td>14.5</td><td>none</td><td>50</td></tr>
   </tbody>
 </table>
 
@@ -508,9 +510,9 @@ seconds. Native takes about 5 min, native-image re-analyses the whole closure ev
 
 Image is Artifact plus Runtime plus a thin OS base plus the shared parcel-data fixtures. Runtime is
 now measured directly, the language VM the image ships as a separate component, not the base image
-as a whole. The JVM ships a 186.9 MiB JRE under a 30 MiB jar on an Alpine base, that is where the
-247 MiB image goes. Rust and native have no separate runtime, they compile it into the binary, so
-the artifact carries the weight, which is why Rust's image is the smallest of these four at 48 MiB.
+as a whole. The JVM ships a 196.0 MB JRE under a 33 MB jar on an Alpine base, that is where the
+259 MB image goes. Rust and native have no separate runtime, they compile it into the binary, so
+the artifact carries the weight, which is why Rust's image is the smallest of these four at 50 MB.
 Go and C join on the full lineup slides later.
 
 ---
@@ -556,7 +558,7 @@ savings are realized through the same freed nodes.
     <tr>
       <th rowspan="2"></th>
       <th colspan="2">Cold start (s)</th>
-      <th colspan="3">RSS (MiB)</th>
+      <th colspan="3">Memory (MB)</th>
       <th colspan="2">CPU (cores)</th>
       <th rowspan="2">Req/s</th>
     </tr>
@@ -567,13 +569,13 @@ savings are realized through the same freed nodes.
     </tr>
   </thead>
   <tbody>
-    <tr class="old"><th>Spring Boot</th><td>1.90</td><td>2.00</td><td>172</td><td>214</td><td>446</td><td>1.32</td><td>2.51</td><td>318</td></tr>
-    <tr class="old"><th>Quarkus (JVM)</th><td>0.67</td><td>0.76</td><td>79</td><td>190</td><td>382</td><td>1.50</td><td>2.57</td><td>350</td></tr>
-    <tr class="old"><th>Quarkus native</th><td>0.10</td><td>0.11</td><td>6.2</td><td>60</td><td>279</td><td>1.11</td><td>2.64</td><td>282</td></tr>
-    <tr class="new"><th>Node</th><td>0.30</td><td>0.35</td><td>93</td><td>94</td><td>169</td><td>0.81</td><td>2.25</td><td>304</td></tr>
-    <tr class="new"><th>Go</th><td>0.09</td><td>0.10</td><td>2.7</td><td>8.7</td><td>31.6</td><td>0.79</td><td>2.63</td><td>383</td></tr>
-    <tr class="old"><th>Rust</th><td>0.10</td><td>0.11</td><td>2.0</td><td>6.9</td><td>12.2</td><td>0.60</td><td>1.64</td><td>860</td></tr>
-    <tr class="new"><th>C</th><td>0.10</td><td>0.11</td><td>1.5</td><td>2.8</td><td>2.9</td><td>0.42</td><td>0.69</td><td>944</td></tr>
+    <tr class="old"><th>Spring Boot</th><td>1.90</td><td>2.00</td><td>180</td><td>224</td><td>468</td><td>1.32</td><td>2.51</td><td>318</td></tr>
+    <tr class="old"><th>Quarkus (JVM)</th><td>0.67</td><td>0.76</td><td>83</td><td>199</td><td>401</td><td>1.50</td><td>2.57</td><td>350</td></tr>
+    <tr class="old"><th>Quarkus native</th><td>0.10</td><td>0.11</td><td>6.5</td><td>63</td><td>293</td><td>1.11</td><td>2.64</td><td>282</td></tr>
+    <tr class="new"><th>Node</th><td>0.30</td><td>0.35</td><td>98</td><td>99</td><td>177</td><td>0.81</td><td>2.25</td><td>304</td></tr>
+    <tr class="new"><th>Go</th><td>0.09</td><td>0.10</td><td>2.8</td><td>9.1</td><td>33.1</td><td>0.79</td><td>2.63</td><td>383</td></tr>
+    <tr class="old"><th>Rust</th><td>0.10</td><td>0.11</td><td>2.1</td><td>7.2</td><td>12.8</td><td>0.60</td><td>1.64</td><td>860</td></tr>
+    <tr class="new"><th>C</th><td>0.10</td><td>0.11</td><td>1.6</td><td>2.9</td><td>3.0</td><td>0.42</td><td>0.69</td><td>944</td></tr>
   </tbody>
 </table>
 
@@ -581,7 +583,7 @@ savings are realized through the same freed nodes.
 
 Same table as before with three new rows. All three new ports do the identical per-request work
 and return byte-identical payloads. Go starts as fast as the natives and stays lean, but its GC
-shows under load, peak RSS 32 MiB versus Rust's 12, and 383 req/s is under half of Rust's 860.
+shows under load, peak memory 33 MB versus Rust's 13, and 383 req/s is under half of Rust's 860.
 
 The C port runs on the h2o library's event loop. It tops the throughput chart at 944 req/s, but
 look at peak CPU: 0.69 of 3 cores. The single-threaded loop never saturated the CPU, so 944 is
@@ -591,12 +593,12 @@ here as the bare-metal reference, the talk lineup stays Spring Boot, Quarkus, Ru
 Node is the new arrival. It runs Fastify behind the node:cluster module, forking one worker per
 core, 3 under --cpus 3, so it reaches 2.25 of 3 cores and 304 req/s, genuinely multi-core like Go
 and the JVMs. That is 2.2x the single-process node:http version it replaced (137 req/s at 0.96
-cores). The cost is memory: three full Node processes push idle RSS to 93 MiB and peak to 169 MiB,
+cores). The cost is memory: three full Node processes push idle memory to 98 MB and peak to 177 MB,
 and cold start to 0.30 s since each worker boots Fastify and loads its own parcel copy.
 
 The big picture across all seven: startup, everything compiled ahead of time lands at 0.1 s,
-Node 0.30 s, the JVM variants pay 0.67 to 1.9 s. Peak memory: C 2.9 below Rust 12 below Go 32
-below Node 169 below native 279 below the JVMs. Throughput: C 944 and Rust 860 in a league of
+Node 0.30 s, the JVM variants pay 0.67 to 1.9 s. Peak memory: C 3.0 below Rust 13 below Go 33
+below Node 177 below native 293 below the JVMs. Throughput: C 944 and Rust 860 in a league of
 their own, then Go 383, then Node 304 and the JVM/native band around 282-350. Rust gives C-class
 efficiency with memory safety and a modern web stack, which is the point of the whole comparison.
 
@@ -606,34 +608,34 @@ efficiency with memory safety and a modern web stack, which is the point of the 
 
 <table class="res">
   <thead>
-    <tr><th></th><th>Build (s)</th><th>Artifact (MiB)</th><th>Runtime (MiB)</th><th>Image (MiB)</th></tr>
+    <tr><th></th><th>Build (s)</th><th>Artifact (MB)</th><th>Runtime (MB)</th><th>Image (MB)</th></tr>
   </thead>
   <tbody>
-    <tr><th>Spring Boot</th><td>8</td><td>31.4</td><td>186.9</td><td>247</td></tr>
-    <tr><th>Quarkus (JVM)</th><td>6</td><td>27.3</td><td>186.9</td><td>243</td></tr>
-    <tr><th>Quarkus native</th><td>297</td><td>87.0</td><td>none</td><td>114</td></tr>
-    <tr><th>Node</th><td>2</td><td>7.0</td><td>115.1</td><td>158</td></tr>
-    <tr><th>Go</th><td>10</td><td>5.4</td><td>none</td><td>9.1</td></tr>
-    <tr class="rust"><th>Rust</th><td>119</td><td>13.8</td><td>none</td><td>48</td></tr>
-    <tr><th>C</th><td>8</td><td>0.3</td><td>none</td><td>35.5</td></tr>
+    <tr><th>Spring Boot</th><td>8</td><td>32.9</td><td>196.0</td><td>259</td></tr>
+    <tr><th>Quarkus (JVM)</th><td>6</td><td>28.6</td><td>196.0</td><td>255</td></tr>
+    <tr><th>Quarkus native</th><td>297</td><td>91.2</td><td>none</td><td>120</td></tr>
+    <tr><th>Node</th><td>2</td><td>7.3</td><td>120.7</td><td>166</td></tr>
+    <tr><th>Go</th><td>10</td><td>5.7</td><td>none</td><td>9.5</td></tr>
+    <tr class="rust"><th>Rust</th><td>119</td><td>14.5</td><td>none</td><td>50</td></tr>
+    <tr><th>C</th><td>8</td><td>0.3</td><td>none</td><td>37.2</td></tr>
   </tbody>
 </table>
 
 ???
 
 Same build caveats as the earlier slide, read it as orders of magnitude. Go rebuilds its image
-in about 10 s, close to the JVM jars, and ships the smallest image of all at 9.1 MiB. C rebuilds
+in about 10 s, close to the JVM jars, and ships the smallest image of all at 9.5 MB. C rebuilds
 in about 8 s warm, around 30 s cold when the Dockerfile apt-installs the h2o toolchain before
 that layer is cached. Node rebuilds in about 2 s warm, around 10-15 s cold when npm ci installs
 Fastify in the build stage. Rust stays at about 2 min for the image rebuild, seconds locally.
 
 The Runtime column is the language VM the image ships as a separate component, measured directly
 from its directory in the image, not the base image as a whole. Only Node and the JVMs have one.
-The JVMs ship a 186.9 MiB JRE, Node a 115.1 MiB Node.js runtime, alongside a tiny app. Go, Rust,
+The JVMs ship a 196.0 MB JRE, Node a 120.7 MB Node.js runtime, alongside a tiny app. Go, Rust,
 C, and native have no separate runtime, they compile it into the binary in the Artifact column,
 Go and Rust statically, C as native code over libc, native baking the GraalVM substrate into its
-87 MiB binary, so the column shows none. The rest of each image is a thin OS base, Alpine about
-28 MiB under the JVMs, distroless Debian under Node/Go/Rust/C, UBI micro about 26 MiB under native.
+91 MB binary, so the column shows none. The rest of each image is a thin OS base, Alpine about
+29 MB under the JVMs, distroless Debian under Node/Go/Rust/C, UBI micro about 27 MB under native.
 So the pattern is Node and JVM ship a big runtime VM plus a small app, the compiled four have the
 runtime inside the binary and no separate VM.
 
