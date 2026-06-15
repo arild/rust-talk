@@ -9,7 +9,7 @@ land in `parcel-api/bench-results/<date>-<n>/` (latest fair run:
 ## What is benchmarked
 
 The same small HTTP service implemented across several stacks. Each serves
-`POST /parcel-api/v1/parcel`, which returns **100 parcels (~396 KB of JSON)**.
+`GET /parcel-api/parcel`, which returns **100 parcels (~396 KB of JSON)**.
 On **every request** the service re-parses all 100 parcels from in-memory JSON,
 recomputes a set of derived "features", and re-serializes the response — so the
 benchmark stresses the runtime's **JSON parse + serialize path and its memory /
@@ -75,8 +75,7 @@ its memory is workload-bound regardless of the limit.
 - Load tool: **[vegeta](https://github.com/tsenart/vegeta)** (`peterevans/vegeta`
   image), running in its own container on a shared Docker bridge network so it
   reaches the service by container DNS (no host networking in the path).
-- Target: `POST http://<service>:8080/parcel-api/v1/parcel`, body `{}`,
-  `Content-Type: application/json`.
+- Target: `GET http://<service>:8080/parcel-api/parcel` (no request body).
 - vegeta runs **closed-loop at max rate** (`-rate=0` with a fixed worker count),
   i.e. N persistent workers each fire the next request as soon as the previous
   one returns — so throughput is bounded by the service, not by a fixed send rate.
@@ -97,8 +96,12 @@ steady-state throughput, allocator behaviour and GC pressure show up. Reported
 
 ### Cold-start time
 For each variant the harness does **10 runs** of: `docker run` the container →
-poll `GET /parcel-api/check/status` until it returns 200 → record the elapsed
-wall-clock time. Reported as **median and p95** of the 10 runs. Note this
+poll `GET /parcel-api/parcel` until it returns 200 → record the elapsed
+wall-clock time. Reported as **median and p95** of the 10 runs. Readiness polls the
+real workload endpoint (there is no separate health endpoint), so cold start is
+genuinely *time to first served request*: for the JVMs this includes lazily
+class-loading and JIT-ing the serialize path on that first call, which is why their
+cold start is meaningfully higher than a trivial health-ping would show. Note this
 includes container-creation overhead, not just the process's own startup (e.g.
 a native binary logs "started in 0.013 s" but the measured cold start is ~90 ms).
 
@@ -167,29 +170,22 @@ Three size figures per variant, all **uncompressed on-disk** (`docker image insp
 
 ## Results
 
-Measured at `--cpus 3`, `--memory 1g`. Native = Oracle GraalVM, G1 GC. This run is
-post-cleanup (validator, auth filter, `ParcelRequest` binding, and the
-`ParcelData`/`ParcelDataResponse` wrapper removed), so **every port now returns a
-bare JSON array of parcels** — identical response shape across variants. The cleanup
-did not materially change resource usage or throughput vs the earlier
-`2026-06-05-full4` run; all metrics land within run-to-run variance. JVM/Rust build
-times are carried over from that run (warm-cache; not re-measured cleanly here).
-
-Provenance: spring-boot / quarkus-jvm / native-g1 / rust are from
-`bench-results/2026-06-11-clean/`; **go and c** from `bench-results/2026-06-12-node-c-go/`;
-**node** (Fastify + cluster) from `bench-results/2026-06-12-node-fastify-cluster/`. Same
-conditions throughout. C reproduced essentially exactly between runs; Go landed within
-run-to-run variance.
+Measured at `--cpus 3`, `--memory 1g`, **all variants in a single run** from
+`bench-results/2026-06-15-1/`. Every port serves a bare JSON array of parcels over
+`GET /parcel-api/parcel`. Build times are **freshly measured this run** (`BUILD=1`,
+clean rebuild per image). One G1 row is shown per JVM stack; the `*-parallel` JVM
+variants and the Serial-GC `quarkus-native` also ran (see Notes for the deck) but
+aren't tabled here.
 
 | Variant | Build | Cold start (med / p95) | Idle RSS | Warm RSS | Peak RSS | Warm CPU | Peak CPU | Steady req/s | Artifact | Runtime | Image |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| spring-boot-g1 | 8 s | 1.90 / 2.00 s | 172 MiB | 214 MiB | 446 MiB | 1.32 | 2.51 | 318 | 31.4 MiB | 186.9 MiB | 247 MiB |
-| quarkus-jvm-g1 | 6 s | 0.67 / 0.76 s | 79 MiB | 190 MiB | 382 MiB | 1.50 | 2.57 | 350 | 27.3 MiB | 186.9 MiB | 243 MiB |
-| quarkus-native-g1 | 297 s | 0.10 / 0.11 s | 6.2 MiB | 60 MiB | 279 MiB | 1.11 | 2.64 | 282 | 87.0 MiB | — | 114 MiB |
-| node | 2 s | 0.30 / 0.35 s | 93.1 MiB | 94.1 MiB | 168.5 MiB | 0.81 | 2.25 | 304 | 7.0 MiB | 115.1 MiB | 158 MiB |
-| go | 10 s | 0.09 / 0.10 s | 2.7 MiB | 8.7 MiB | 31.6 MiB | 0.79 | 2.63 | 383 | 5.4 MiB | — | 9.1 MiB |
-| rust | 119 s | 0.10 / 0.11 s | 2.0 MiB | 6.9 MiB | 12.2 MiB | 0.60 | 1.64 | 860 | 13.8 MiB | — | 48 MiB |
-| c | 8 s | 0.10 / 0.11 s | 1.5 MiB | 2.8 MiB | 2.9 MiB | 0.42 | 0.69 | 944 | 0.3 MiB | — | 35.5 MiB |
+| spring-boot-g1 | 9 s | 2.68 / 2.86 s | 179 MiB | 210 MiB | 438 MiB | 1.29 | 2.44 | 249 | 31.4 MiB | 186.9 MiB | 247 MiB |
+| quarkus-jvm-g1 | 24 s | 1.61 / 1.70 s | 129 MiB | 201 MiB | 381 MiB | 1.38 | 2.55 | 337 | 27.3 MiB | 186.9 MiB | 243 MiB |
+| quarkus-native-g1 | 287 s | 0.13 / 0.15 s | 37 MiB | 69 MiB | 278 MiB | 1.05 | 2.61 | 277 | 87.0 MiB | — | 114 MiB |
+| node | 3 s | 0.26 / 0.35 s | 96 MiB | 86 MiB | 162 MiB | 0.83 | 2.38 | 381 | 7.0 MiB | 115.1 MiB | 158 MiB |
+| go | 8 s | 0.13 / 0.19 s | 5.7 MiB | 7.7 MiB | 24.6 MiB | 0.82 | 2.61 | 404 | 5.4 MiB | — | 9.0 MiB |
+| rust | 70 s | 0.11 / 0.11 s | 2.8 MiB | 3.6 MiB | 11.6 MiB | 0.56 | 1.83 | 923 | 13.8 MiB | — | 48 MiB |
+| c | 11 s | 0.11 / 0.15 s | 2.0 MiB | 2.1 MiB | 2.3 MiB | 0.49 | 0.69 | 917 | 0.3 MiB | — | 35.5 MiB |
 
 **Where the runtime lives.** The `Runtime` column is the language runtime / VM the
 image ships as a *separate* component. Only Node and the JVM have one: the JVM ports
@@ -201,32 +197,33 @@ rest of each image is the OS base: Alpine (~28 MiB) under the JVM ports, distrol
 Debian under Node/Go/Rust/C, UBI micro (~26 MiB) under native. So: JVM/Node = big shipped
 runtime + small app; Go/Rust/C/native = runtime inside the binary, no separate VM.
 
-Headlines: **startup** — native/Go/Rust/C ~0.1 s, Node 0.30 s (forks 3 workers),
-Quarkus-JVM 0.67 s, Spring Boot 1.9 s. **Idle memory** — C 1.5 MiB ≈ Rust 2 ≈ Go 2.7
-≪ native 6 ≪ Quarkus-JVM 79 ≪ Node 93 ≪ Spring Boot 172. **Peak memory under load**
-— C 2.9 MiB ≪ Rust 12 ≪ Go 32 ≪ Node 169 ≪ native 279 ≪ Quarkus-JVM 382 ≪ Spring
-Boot 446. **Throughput** — C 944 ≈ Rust 860, both ≫ Go 383 ≫ Node 304 and the
-JVM/native band (282–350).
+Headlines: **startup** — native/Rust/C ~0.1 s, Go 0.13 s, Node 0.26 s, Quarkus-JVM
+1.6 s, Spring Boot 2.7 s (the JVMs rose because readiness now hits the real
+`GET /parcel`, not a trivial ping — see Cold-start time). **Idle memory** — C 2.0 MiB
+≈ Rust 2.8 ≈ Go 5.7 ≪ native 37 ≪ Node 96 ≪ Quarkus-JVM 129 ≪ Spring Boot 179. **Peak
+memory under load** — C 2.3 MiB ≪ Rust 12 ≪ Go 25 ≪ Node 162 ≪ native 278 ≪
+Quarkus-JVM 381 ≪ Spring Boot 438. **Throughput** — C 917 ≈ Rust 923, both ≫ Go 404 ≈
+Node 381 ≫ the JVM/native band (249–337).
 
-**C caveat:** C led on throughput while peaking at only **0.69 of 3 cores** — the
-single-threaded h2o event loop wasn't CPU-saturated, so 944 req/s is a *floor*, not
-its ceiling, and its CPU-per-request isn't cleanly comparable to the others. The
+**C caveat:** C ran neck-and-neck with Rust on throughput (917 vs 923) while peaking
+at only **0.69 of 3 cores** — the single-threaded h2o event loop wasn't CPU-saturated,
+so 917 req/s is a *floor*, not its ceiling, and its CPU-per-request isn't cleanly
+comparable to the others. The
 three-way talk lineup is Spring Boot / Quarkus / Rust; Go, C, and Node are extra
 reference points.
 
 **Node:** runs Fastify behind the `node:cluster` module, forking one worker per core
-(3 under `--cpus 3`). That reaches **2.25 of 3 cores and 304 req/s** — 2.2× the
+(3 under `--cpus 3`). That reaches **2.38 of 3 cores and 381 req/s** — ~2.8× the
 single-process `node:http` version it replaced (137 req/s at 0.96 cores; preserved in
 `bench-results/2026-06-12-node-c-go/`), now genuinely multi-core like Go and the JVMs.
-The cost is memory: three full Node processes push idle RSS to 93 MiB and peak to
-169 MiB (vs 13 / 46 single-process), and cold start to 0.30 s (each worker boots
+The cost is memory: three full Node processes push idle RSS to 96 MiB and peak to
+162 MiB (vs 13 / 46 single-process), and cold start to 0.26 s (each worker boots
 Fastify and loads its own parcel copy). RSS scales ~linearly with `WEB_CONCURRENCY`.
 
 Build column is the **containerized image rebuild** (deps/toolchain cached, app
-recompiled): Node image ≈ 2 s warm (~10–15 s cold, when `npm ci` installs fastify in
-the build stage); JVM clean rebuild ≈ 6–8 s; Go image ≈ 10 s; C ≈ 8 s warm (~30 s cold, when Docker
-apt-installs the h2o toolchain before that layer is cached); Rust image ≈ 2 min
-(Docker layers aren't
-incremental — the app crate recompiles from scratch each build; a *local*
-incremental `cargo build` is seconds); native ≈ 5 min (`native-image` re-analyses
-the whole closure every time and can't be cached). Read it as orders of magnitude.
+recompiled): Node ≈ 3 s; Spring Boot ≈ 9 s and Quarkus-JVM ≈ 24 s (`gradlew clean
+build`); Go ≈ 8 s; C ≈ 11 s warm (~30 s cold, when Docker apt-installs the h2o
+toolchain before that layer is cached); Rust ≈ 70 s (cargo-chef caches the dependency
+layer, so only the app crate recompiles — a *local* incremental `cargo build` is
+seconds); native ≈ 5 min (`native-image` re-analyses the whole closure every time and
+can't be cached). Read it as orders of magnitude.
