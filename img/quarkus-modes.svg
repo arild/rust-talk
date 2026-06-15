@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 410" font-family="Inter, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <marker id="arrowq" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#444"/>
+    </marker>
+  </defs>
+
+  <!-- Quarkus app -->
+  <rect x="20" y="165" width="170" height="90" rx="10" fill="#FAFAFA" stroke="#444" stroke-width="2"/>
+  <text x="105" y="205" text-anchor="middle" font-size="20" font-weight="600" fill="#1A1A1A">Quarkus</text>
+  <text x="105" y="230" text-anchor="middle" font-size="20" font-weight="600" fill="#1A1A1A">app</text>
+
+  <line x1="192" y1="210" x2="244" y2="210" stroke="#444" stroke-width="2" marker-end="url(#arrowq)"/>
+
+  <!-- Build-time augmentation -->
+  <rect x="246" y="160" width="212" height="100" rx="10" fill="#F1ECE2" stroke="#9A7B3F" stroke-width="2.5"/>
+  <text x="352" y="198" text-anchor="middle" font-size="19" font-weight="700" fill="#6E5524">Build-time</text>
+  <text x="352" y="222" text-anchor="middle" font-size="19" font-weight="700" fill="#6E5524">augmentation</text>
+  <text x="352" y="290" text-anchor="middle" font-size="15" fill="#777">wiring + config + reflection</text>
+  <text x="352" y="310" text-anchor="middle" font-size="15" fill="#777">resolved at build</text>
+
+  <!-- split arrows -->
+  <line x1="460" y1="188" x2="572" y2="100" stroke="#444" stroke-width="2" marker-end="url(#arrowq)"/>
+  <line x1="460" y1="232" x2="572" y2="332" stroke="#444" stroke-width="2" marker-end="url(#arrowq)"/>
+  <text x="701" y="50" text-anchor="middle" font-size="17" font-weight="600" fill="#33617F">JVM mode</text>
+  <text x="701" y="290" text-anchor="middle" font-size="17" font-weight="600" fill="#8F3410">Native mode</text>
+
+  <!-- JVM mode box -->
+  <rect x="576" y="60" width="250" height="90" rx="10" fill="#EAF2F8" stroke="#4E7C9E" stroke-width="2.5"/>
+  <text x="701" y="97" text-anchor="middle" font-size="20" font-weight="700" fill="#33617F">Bytecode on JVM</text>
+  <text x="701" y="124" text-anchor="middle" font-size="17" fill="#33617F">JIT + GC, pre-booted</text>
+
+  <!-- Native mode boxes -->
+  <rect x="576" y="300" width="250" height="90" rx="10" fill="#FAFAFA" stroke="#444" stroke-width="2"/>
+  <text x="701" y="337" text-anchor="middle" font-size="19" font-weight="700" fill="#1A1A1A">GraalVM native-image</text>
+  <text x="701" y="364" text-anchor="middle" font-size="17" fill="#555">AOT, closed world</text>
+
+  <line x1="828" y1="345" x2="874" y2="345" stroke="#444" stroke-width="2" marker-end="url(#arrowq)"/>
+
+  <rect x="876" y="300" width="232" height="90" rx="10" fill="#FBEDE7" stroke="#B7410E" stroke-width="2.5"/>
+  <text x="992" y="337" text-anchor="middle" font-size="20" font-weight="700" fill="#8F3410">Native binary</text>
+  <text x="992" y="364" text-anchor="middle" font-size="17" fill="#8F3410">no JVM at runtime</text>
+</svg>

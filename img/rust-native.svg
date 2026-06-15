@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1100 300" font-family="Inter, 'Helvetica Neue', Arial, sans-serif">
+  <defs>
+    <marker id="arrowr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#444"/>
+    </marker>
+  </defs>
+
+  <!-- Source -->
+  <rect x="120" y="110" width="170" height="80" rx="10" fill="#FAFAFA" stroke="#444" stroke-width="2"/>
+  <text x="205" y="143" text-anchor="middle" font-size="22" font-weight="600" fill="#1A1A1A">Source</text>
+  <text x="205" y="172" text-anchor="middle" font-size="20" fill="#555">.rs</text>
+
+  <line x1="292" y1="150" x2="430" y2="150" stroke="#444" stroke-width="2" marker-end="url(#arrowr)"/>
+  <text x="361" y="130" text-anchor="middle" font-size="17" fill="#555">rustc + LLVM</text>
+  <text x="361" y="174" text-anchor="middle" font-size="15" fill="#888">ahead of time</text>
+
+  <!-- Native binary -->
+  <rect x="432" y="100" width="250" height="100" rx="12" fill="#FBEDE7" stroke="#B7410E" stroke-width="2.5"/>
+  <text x="557" y="140" text-anchor="middle" font-size="22" font-weight="700" fill="#8F3410">Native binary</text>
+  <text x="557" y="170" text-anchor="middle" font-size="17" fill="#8F3410">self-contained</text>
+
+  <line x1="684" y1="150" x2="820" y2="150" stroke="#444" stroke-width="2" marker-end="url(#arrowr)"/>
+  <text x="752" y="132" text-anchor="middle" font-size="17" fill="#555">runs directly</text>
+
+  <!-- CPU -->
+  <rect x="822" y="110" width="160" height="80" rx="10" fill="#FAFAFA" stroke="#444" stroke-width="2"/>
+  <text x="902" y="157" text-anchor="middle" font-size="22" font-weight="600" fill="#1A1A1A">CPU</text>
+
+  <text x="557" y="258" text-anchor="middle" font-size="17" fill="#8F3410">no VM &#183; no bytecode &#183; no GC &#183; ready on first request</text>
+</svg>
